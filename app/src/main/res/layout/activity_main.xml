@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <RelativeLayout
+        android:id="@+id/topLinear"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="#fff"
+        >
+        
+        <ImageView
+            android:id="@+id/headImageId"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/touxiang"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="6dp"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:textColor="@color/color_9489D7"
+            android:text="汤米,下午好"
+            android:layout_toRightOf="@id/headImageId"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/addPeopleId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/add_people"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:padding="8dp"
+            />
+
+        <ImageView
+            android:id="@+id/messageId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/message_icon"
+            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:padding="8dp"
+            android:layout_toLeftOf="@id/addPeopleId"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:background="#00000000">
+
+        <RadioGroup
+            android:id="@+id/rg_radio"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="#fff"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioBtn_device"
+                android:drawableTop="@drawable/tab_device_icon_bg"
+                android:text="设备"
+                style="@style/radioButton"
+                />
+
+            <RadioButton
+                android:id="@+id/radioBtn_team"
+                android:drawableTop="@drawable/tab_team_icon_bg"
+                android:text="组队"
+                style="@style/radioButton"
+                />
+
+            <RadioButton
+                android:id="@+id/radioBtn_find"
+                android:drawableTop="@drawable/tab_find_icon_bg"
+                android:text="发现"
+                style="@style/radioButton"/>
+
+            <RadioButton
+                android:id="@+id/radioBtn_mall"
+                android:drawableTop="@drawable/tab_mall_icon_bg"
+                android:text="商城"
+                style="@style/radioButton"
+                />
+
+            <RadioButton
+                android:id="@+id/radioBtn_mine"
+                android:drawableTop="@drawable/tab_mine_icon_bg"
+                android:text="我的"
+                style="@style/radioButton"/>
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_bottom_bar"
+        android:layout_below="@id/topLinear"
+        android:background="@color/color_EBE8FF"/>
+
+</RelativeLayout>

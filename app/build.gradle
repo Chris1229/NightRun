@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "24.0.3"
+    defaultConfig {
+        applicationId "com.org.nightrun"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        quncaosign {
+            keyAlias 'quncaotech'
+            keyPassword '123456'
+            storeFile file('../keystore/quncaotech.keystore')
+            storePassword '123456'
+            v2SigningEnabled false
+        }
+
+        quncaosignDebug {
+            keyAlias 'quncaotech'
+            keyPassword '123456'
+            storeFile file('../keystore/quncaotech.keystore')
+            storePassword '123456'
+            v2SigningEnabled false
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable false
+            zipAlignEnabled true
+            jniDebuggable false
+            renderscriptDebuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.quncaosign
+            manifestPlaceholders = [
+//                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
+//                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
+//                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
+//                    PUSH_PROVIDER       : "downloads.com.quncao.lark",
+//                    PUSH_PERMISSION     : "getui.permission.GetuiService.com.quncao.lark",
+                    BAIDU_KEY           : "B2dGs75tSowbqcHQENj7rGn2",
+            ]
+        }
+
+        debug {
+            signingConfig signingConfigs.quncaosign
+            applicationIdSuffix ".debug"
+            manifestPlaceholders = [
+//                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
+//                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
+//                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
+//                    PUSH_PROVIDER       : "downloads.com.quncao.lark.debug",
+//                    PUSH_PERMISSION     : "getui.permission.GetuiService.com.quncao.lark.debug",
+                    BAIDU_KEY           : "hp4gzxTAvh0eyKk7ngw28IQYM6z0j7Pm",
+            ]
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+    testCompile 'junit:junit:4.12'
+    compile project(':common')
+}

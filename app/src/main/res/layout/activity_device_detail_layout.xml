@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F1F1F4"
+    android:orientation="vertical">
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="@color/color_F1F1F4"
+       android:scrollbars="none"
+       android:paddingTop="18dp">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:background="@color/color_white">
+
+           <RelativeLayout
+               android:id="@+id/shouquanId"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="授权报警给亲友(本人设备有该功能)"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_family"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@mipmap/icon_arrow_right_grey"
+                   android:scaleType="fitXY"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"/>
+
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1px"
+               android:background="@color/color_F1F1F4"
+               android:layout_marginLeft="15dp"/>
+
+           <RelativeLayout
+               android:id="@+id/locationId"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="查看设备当前位置"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_location"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@mipmap/icon_arrow_right_grey"
+                   android:scaleType="fitXY"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"/>
+
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1px"
+               android:background="@color/color_F1F1F4"
+               android:layout_marginLeft="15dp"/>
+
+           <RelativeLayout
+               android:id="@+id/historyGuiJiId"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="查看历史轨迹"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_guiji"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@mipmap/icon_arrow_right_grey"
+                   android:scaleType="fitXY"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"/>
+
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1px"
+               android:background="@color/color_F1F1F4"
+               android:layout_marginLeft="15dp"/>
+
+           <RelativeLayout
+               android:id="@+id/wramingTimeId"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="设置预警定位时间"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_time"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="13dp"
+               android:background="@color/color_F1F1F4"
+               />
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="启闭预警功能"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_wraming"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <CheckBox
+                   android:id="@+id/check_wramimg"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"
+                   android:button="@null"
+                   android:background="@drawable/radiobutton_bg"
+                   android:checked="true"
+                   />
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1px"
+               android:background="@color/color_F1F1F4"
+               android:layout_marginLeft="15dp"/>
+
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="解绑本设备"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_unband"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <CheckBox
+                   android:id="@+id/check_unband"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"
+                   android:button="@null"
+                   android:background="@drawable/radiobutton_bg"
+                   android:checked="true"
+                   />
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="13dp"
+               android:background="@color/color_F1F1F4"
+               />
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="开启震动"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_zhendong"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <CheckBox
+                   android:id="@+id/check_zhendong"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"
+                   android:button="@null"
+                   android:background="@drawable/radiobutton_bg"
+                   android:checked="true"
+                   />
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1px"
+               android:background="@color/color_F1F1F4"
+               android:layout_marginLeft="15dp"/>
+
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="开启红蓝闪灯"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_dengguang"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <CheckBox
+                   android:id="@+id/check_dengguang"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"
+                   android:button="@null"
+                   android:background="@drawable/radiobutton_bg"
+                   android:checked="true"
+                   />
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1px"
+               android:background="@color/color_F1F1F4"
+               android:layout_marginLeft="15dp"/>
+
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@color/color_white"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="开启蜂鸣器"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/device_detail_fengming"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <CheckBox
+                   android:id="@+id/check_fengming"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"
+                   android:button="@null"
+                   android:background="@drawable/radiobutton_bg"
+                   android:checked="true"
+                   />
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="1px"
+               android:background="@color/color_F1F1F4"
+               android:layout_marginLeft="15dp"/>
+
+
+
+       </LinearLayout>
+
+   </ScrollView>
+</LinearLayout>

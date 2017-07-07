@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.org.nightrun">
+
+    <application
+        android:name=".NightRunApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.LoginActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
+
+        <activity android:name=".activity.RegisterActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
+
+        <activity android:name=".activity.FindPassWordActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
+
+        <activity android:name=".activity.DeviceDetailsActivity"
+            android:launchMode="standard"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
+
+        <activity android:name=".activity.TeamMemberListActivity"
+            android:launchMode="standard"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
+
+        <activity android:name=".activity.AuthorityMemberListActivity"
+            android:launchMode="standard"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
+    </application>
+
+</manifest>
