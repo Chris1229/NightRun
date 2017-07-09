@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 break;
 
             case R.id.radioBtn_find:
-                if(!mTopLinar.isShown()){
-                    mTopLinar.setVisibility(View.VISIBLE);
+                if(mTopLinar.isShown()){
+                    mTopLinar.setVisibility(View.GONE);
                 }
                 if (findFragment == null) {
                     findFragment = new FindFragment();
@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 break;
 
             case R.id.radioBtn_mall:
-                if(!mTopLinar.isShown()){
-                    mTopLinar.setVisibility(View.VISIBLE);
+                if(mTopLinar.isShown()){
+                    mTopLinar.setVisibility(View.GONE);
                 }
                 if (mallFragment == null) {
                     mallFragment = new MallFragment();

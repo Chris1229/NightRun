@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F1F1F4"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="311dp"
+        android:background="@color/color_white"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/imageViewId"
+            android:layout_width="match_parent"
+            android:layout_height="243dp"
+            android:src="@mipmap/find_bg"
+            android:scaleType="fitXY"/>
+
+        <ImageView
+            android:id="@+id/likeImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/like"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:gravity="center"
+            android:layout_below="@id/imageViewId">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:text="米撕鹿带你也刷二环，跨过夜幕抱帝都最美日出"
+                />
+
+            <TextView
+                android:id="@+id/readNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2231"
+                android:textSize="11sp"
+                android:textColor="#999"
+                android:layout_below="@id/tvTitle"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@mipmap/eye"
+                android:drawablePadding="5dp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

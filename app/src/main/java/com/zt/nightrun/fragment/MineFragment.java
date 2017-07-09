@@ -1,5 +1,6 @@
 package com.zt.nightrun.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.chris.common.view.BaseFragment;
 import com.zt.nightrun.R;
+import com.zt.nightrun.activity.FindPassWordActivity;
 
 /**
  * 作者：by chris
@@ -66,7 +68,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
 
 
             case R.id.revisepasswordId:
-
+                startActivity(new Intent(getActivity(), FindPassWordActivity.class));
                 break;
 
 

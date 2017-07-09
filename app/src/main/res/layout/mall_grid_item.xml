@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F1F1F4"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="269dp"
+        android:background="@color/color_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageViewId"
+            android:layout_width="132dp"
+            android:layout_height="146dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="24dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/huawei" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Type华为手环B3蓝牙耳机与智能手环触控屏幕腕带运动版"
+            android:textColor="#4A4A4A"
+            android:textSize="12sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginBottom="15dp"
+            />
+
+        <TextView
+            android:id="@+id/goBuy"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:text="去淘货"
+            android:textColor="@color/color_9489D7"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/text_bg_9489d7"
+            />
+
+    </LinearLayout>
+</LinearLayout>
