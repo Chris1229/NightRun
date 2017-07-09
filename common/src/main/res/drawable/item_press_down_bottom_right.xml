@@ -4,6 +4,6 @@
 
     <corners android:bottomRightRadius="@dimen/value_2dp"/>
 
-    <solid android:color="#0F2d2d37" />
+    <solid android:color="#0F675BAE" />
 
 </shape>

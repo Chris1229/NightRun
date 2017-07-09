@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F1F1F4"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_white"
+        android:layout_marginTop="18dp">
+
+        <RelativeLayout
+            android:id="@+id/teamListId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/color_white"
+            android:paddingLeft="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="队员列表"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="@color/color_35304F"
+                android:drawableLeft="@mipmap/team_detail_list"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_arrow_right_grey"
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_F1F1F4"
+            android:layout_marginLeft="15dp"/>
+
+        <RelativeLayout
+            android:id="@+id/colorId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/color_white"
+            android:paddingLeft="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="指定荧光棒颜色"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="@color/color_35304F"
+                android:drawableLeft="@mipmap/team_detail_color"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_arrow_right_grey"
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_F1F1F4"
+            android:layout_marginLeft="15dp"/>
+
+        <RelativeLayout
+            android:id="@+id/memberLocationId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/color_white"
+            android:paddingLeft="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="队员位置"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="@color/color_35304F"
+                android:drawableLeft="@mipmap/team_detail_location"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_arrow_right_grey"
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_F1F1F4"
+            android:layout_marginLeft="15dp"/>
+
+        <RelativeLayout
+            android:id="@+id/teamCodeId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/color_white"
+            android:paddingLeft="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="组队二维码"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="@color/color_35304F"
+                android:drawableLeft="@mipmap/team_detail_code"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/color_F1F1F4"
+            />
+
+        <TextView
+            android:id="@+id/overTeam"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="结束组队"
+            android:textColor="#D18484"
+            android:textSize="15sp"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+</LinearLayout>

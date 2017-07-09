@@ -31,4 +31,5 @@ dependencies {
     compile project(':libhttp')
     compile files('libs/glide-3.7.0.jar')
     compile project(':Onexlistview')
+    compile files('libs/BaiduLBS_Android.jar')
 }

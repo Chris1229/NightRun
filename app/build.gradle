@@ -4,7 +4,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "24.0.3"
     defaultConfig {
-        applicationId "com.org.nightrun"
+        applicationId "com.zt.nightrun"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
