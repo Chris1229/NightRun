@@ -47,11 +47,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.quncaosign
             manifestPlaceholders = [
-//                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
-//                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
-//                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
-//                    PUSH_PROVIDER       : "downloads.com.quncao.lark",
-//                    PUSH_PERMISSION     : "getui.permission.GetuiService.com.quncao.lark",
+                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
+                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
+                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
+                    PUSH_PROVIDER       : "downloads.com.zt.nightrun",
+                    PUSH_PERMISSION     : "getui.permission.GetuiService.com.zt.nightrun",
                     BAIDU_KEY           : "B2dGs75tSowbqcHQENj7rGn2",
             ]
         }
@@ -60,12 +60,12 @@ android {
             signingConfig signingConfigs.quncaosign
             applicationIdSuffix ".debug"
             manifestPlaceholders = [
-//                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
-//                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
-//                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
-//                    PUSH_PROVIDER       : "downloads.com.quncao.lark.debug",
-//                    PUSH_PERMISSION     : "getui.permission.GetuiService.com.quncao.lark.debug",
-                    BAIDU_KEY           : "hp4gzxTAvh0eyKk7ngw28IQYM6z0j7Pm",
+                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
+                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
+                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
+                    PUSH_PROVIDER       : "downloads.com.zt.nightrun.debug",
+                    PUSH_PERMISSION     : "getui.permission.GetuiService.com.zt.nightrun.debug",
+                    BAIDU_KEY           : "SGd7e0yyuK4O0hBmzCHLGAjdcufe5ibI",
             ]
         }
     }

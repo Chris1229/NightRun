@@ -1,6 +1,9 @@
 package com.zt.nightrun.activity;
 
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
 import com.baidu.location.BDLocation;
@@ -32,14 +35,29 @@ public class LocationActivity extends BaseActivity {
     private BaiduMap mBaiduMap;
     private LocationClient mBDLocationClient;
     private MyBDLocationListener mBDLocationListener;
-
+    private boolean isFirstLoc=true;
     private MyLocationData locData;
+    private static final int MY_PERMISSION_REQUEST_CODE = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_location_layout,true);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[] {
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    },
+                    MY_PERMISSION_REQUEST_CODE
+            );
+        }
 
         setTitle("设备当前位置");
 
@@ -61,6 +79,9 @@ public class LocationActivity extends BaseActivity {
         mMapView.removeViewAt(1); //隐藏百度logo
         mMapView.setLongClickable(true);
         mBaiduMap = mMapView.getMap();
+        mBaiduMap.setMyLocationEnabled(true); // 开启定位图层
+        mBaiduMap.setTrafficEnabled(false); // 开启交通图
+
         initBaiduLocationListener();
     }
 
@@ -92,16 +113,6 @@ public class LocationActivity extends BaseActivity {
         option.setScanSpan(0);//0表示定位一次
         mBDLocationClient.setLocOption(option);
 
-        mBaiduMap.setMyLocationEnabled(true); // 开启定位图层
-        mBaiduMap.setTrafficEnabled(false); // 开启交通图
-
-        LatLng ll = new LatLng(100,
-                100);
-        MapStatus.Builder builder = new MapStatus.Builder();
-        builder.target(ll).zoom(18.0f);
-        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-        mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
-
         mBDLocationClient.start();
     }
 
@@ -123,22 +134,35 @@ public class LocationActivity extends BaseActivity {
 
             mBaiduMap.setMyLocationData(locData);
 
-            // 设置用户自定义定位图标
-            BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
-                    .fromResource(R.mipmap.map_icon_point);
-            MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker);
-            mBaiduMap.setMyLocationConfigeration(config);
+//            if (isFirstLoc) {
+//                isFirstLoc = false;
+//                LatLng ll = new LatLng(location.getLatitude(),
+//                        location.getLongitude());
+//                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+//                mBaiduMap.animateMapStatus(u);
+//            }
+//
+            //设置用户自定义定位图标
+//            BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
+//                    .fromResource(R.mipmap.map_icon_point);
+//            MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, mCurrentMarker);
+//            mBaiduMap.setMyLocationConfigeration(config);
 
-            LatLng pointLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            if (isFirstLoc) {
+                LatLng pointLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-            MapStatus mMapStatus = new MapStatus.Builder()
-                    .target(pointLocation)
-                    .zoom(18)
-                    .build();
-            //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-            MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
-            mBaiduMap.animateMapStatus(mMapStatusUpdate);
+                MapStatus mMapStatus = new MapStatus.Builder()
+                        .target(pointLocation)
+                        .zoom(15)
+                        .build();
+                //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+                MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+                mBaiduMap.animateMapStatus(mMapStatusUpdate);
+            }
+
+            location.setGpsAccuracyStatus(0);
         }
+
 
         @Override
         public void onConnectHotSpotMessage(String s, int i) {

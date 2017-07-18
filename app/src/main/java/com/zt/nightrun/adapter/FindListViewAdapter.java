@@ -57,7 +57,7 @@ public class FindListViewAdapter extends BaseAdapter{
         }
 
         if(position ==1){
-            viewHolder.likeImg.setImageResource(R.mipmap.like);
+            viewHolder.likeImg.setImageResource(R.mipmap.like_down);
         }else{
             viewHolder.likeImg.setImageResource(R.mipmap.like_up);
         }

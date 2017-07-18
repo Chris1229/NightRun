@@ -84,7 +84,7 @@
                        android:text="80%"
                        android:textColor="@color/color_white"
                        android:textSize="13sp"
-                       android:drawableTop="@mipmap/battery"
+                       android:drawableTop="@mipmap/battery_normal"
                        android:drawablePadding="2dp"
                        />
 
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="14dp"
             android:layout_marginLeft="14dp"
-            android:src="@mipmap/icon_arrow_right_grey"
+            android:src="@mipmap/icon_arrow_right_white"
             android:scaleType="fitXY"
             />
 

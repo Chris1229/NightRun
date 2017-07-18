@@ -1,13 +1,20 @@
 package com.zt.nightrun.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.chris.common.utils.ToastUtils;
 import com.chris.common.view.BaseActivity;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
+
+import java.util.List;
 
 /**
  * 作者：by chris
@@ -72,8 +79,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
 
             case R.id.weixinLoginId:
-
+                if (!getIsWeixinInstall()) {
+                    ToastUtils.show(this,"您还未安装微信客户端");
+                    return;
+                }
+                final SendAuth.Req req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+                req.state = "diandi_wx_login";
+                NightRunApplication.getWxApi().sendReq(req);
                 break;
         }
+    }
+
+    private boolean getIsWeixinInstall() {
+        final PackageManager packageManager = NightRunApplication.getInstance().getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
