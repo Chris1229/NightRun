@@ -33,6 +33,7 @@
             android:button="@null"
             android:background="@drawable/radiobutton_bg"
             android:checked="true"
+            android:visibility="gone"
             />
     </RelativeLayout>
 

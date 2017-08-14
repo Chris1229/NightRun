@@ -23,11 +23,12 @@
             />
 
         <TextView
+            android:id="@+id/tvNick"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="15sp"
             android:textColor="@color/color_9489D7"
-            android:text="汤米,下午好"
+            android:text=""
             android:layout_toRightOf="@id/headImageId"
             android:gravity="center"
             />

@@ -45,29 +45,29 @@ public class LocationActivity extends BaseActivity {
 
         setContentView(R.layout.activity_location_layout,true);
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[] {
-                            Manifest.permission.READ_PHONE_STATE,
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    },
-                    MY_PERMISSION_REQUEST_CODE
-            );
-        }
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            ActivityCompat.requestPermissions(
+//                    this,
+//                    new String[] {
+//                            Manifest.permission.READ_PHONE_STATE,
+//                            Manifest.permission.ACCESS_COARSE_LOCATION,
+//                            Manifest.permission.ACCESS_FINE_LOCATION,
+//                            Manifest.permission.READ_EXTERNAL_STORAGE,
+//                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                    },
+//                    MY_PERMISSION_REQUEST_CODE
+//            );
+//        }
 
         setTitle("设备当前位置");
 
-        setRightImage(R.mipmap.share).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+//        setRightImage(R.mipmap.share).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
 
         mMapView =(MapView)findViewById(R.id.mapViewId);
         initMapView();

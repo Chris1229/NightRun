@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="邀请成员"
+        android:layout_marginTop="@dimen/value_24dp"
+        android:textColor="#2d2d37"
+        android:gravity="center"
+        android:textSize="@dimen/value_15sp" />
+
+    <GridView
+        android:id="@+id/grid_view"
+        style="@style/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:paddingTop="@dimen/value_24dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#e8e8e8"/>
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/value_44dp"
+        android:textSize="@dimen/value_15sp"
+        android:gravity="center"
+        android:textColor="#2d2d37"
+        android:text="取消"/>
+
+</LinearLayout>

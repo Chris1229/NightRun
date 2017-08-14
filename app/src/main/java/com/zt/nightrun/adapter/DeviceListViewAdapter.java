@@ -5,9 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zt.nightrun.R;
+import com.zt.nightrun.model.resp.DeviceItem;
+
+import java.util.List;
 
 /**
  * 作者：by chris
@@ -18,14 +23,16 @@ import com.zt.nightrun.R;
 public class DeviceListViewAdapter extends BaseAdapter{
 
     private Context mContext;
+    private List<DeviceItem> lists;
 
-    public DeviceListViewAdapter(Context mContext) {
+    public DeviceListViewAdapter(Context mContext,List<DeviceItem> list) {
         this.mContext = mContext;
+        this.lists =list;
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return lists.size();
     }
 
     @Override
@@ -46,12 +53,35 @@ public class DeviceListViewAdapter extends BaseAdapter{
             viewHolder = new ViewHolder();
 
             viewHolder.mItemLinear =(LinearLayout)convertView.findViewById(R.id.itemLinear);
-
+            viewHolder.tvNickName =(TextView)convertView.findViewById(R.id.tvNickName);
+            viewHolder.tvDeviceName =(TextView)convertView.findViewById(R.id.tvDeviceName);
+            viewHolder.tvPower =(TextView)convertView.findViewById(R.id.powerId);
+            viewHolder.powerImg =(ImageView) convertView.findViewById(R.id.powerImage);
+            viewHolder.tvType =(TextView)convertView.findViewById(R.id.type);
+            viewHolder.tvStatus =(TextView)convertView.findViewById(R.id.statusId);
             convertView.setTag(viewHolder);
         }else{
             viewHolder =(ViewHolder)convertView.getTag();
         }
+        final DeviceItem deviceItem =lists.get(position);
+        viewHolder.tvNickName.setText(deviceItem.getUser().getNick());
+        viewHolder.tvDeviceName.setText(deviceItem.getDevice().getName());
+        if(deviceItem.getDevice().getPower()>20){
+            viewHolder.powerImg.setImageResource(R.mipmap.battery_normal);
+            viewHolder.tvPower.setText(deviceItem.getDevice().getPower()+"%");
+        }else{
+            viewHolder.powerImg.setImageResource(R.mipmap.battery_red);
+            viewHolder.tvPower.setText("80%");
+        }
 
+        viewHolder.tvType.setText("网络版");
+        if(deviceItem.getDevice().getStatus()==0){
+            viewHolder.tvStatus.setText("报警");
+            viewHolder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_DE5454));
+        }else{
+            viewHolder.tvStatus.setText("在线");
+            viewHolder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_white));
+        }
         if(position % 4 ==0){
             viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_blue);
         }else if (position % 4 ==1){
@@ -66,5 +96,7 @@ public class DeviceListViewAdapter extends BaseAdapter{
 
     class ViewHolder{
         private LinearLayout mItemLinear;
+        private TextView tvNickName,tvDeviceName,tvPower,tvStatus,tvType;
+        private ImageView powerImg;
     }
 }

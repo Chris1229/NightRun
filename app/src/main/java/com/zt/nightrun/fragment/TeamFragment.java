@@ -7,15 +7,25 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.android.volley.error.VolleyError;
+import com.chris.common.network.HttpRequestProxy;
 import com.chris.common.utils.ToastUtils;
 import com.chris.common.view.BaseFragment;
+import com.quncao.core.http.AbsHttpRequestProxy;
+import com.zt.nightrun.activity.DeviceDetailsActivity;
 import com.zt.nightrun.activity.TeamDetailsActivity;
+import com.zt.nightrun.model.req.ReqActiveDevice;
+import com.zt.nightrun.model.req.ReqCreateGroup;
+import com.zt.nightrun.model.resp.Group;
+import com.zt.nightrun.model.resp.RespActiveDevice;
+import com.zt.nightrun.model.resp.RespCreateGroup;
 import com.zt.nightrun.view.CustomEditDialog;
 import com.zt.nightrun.R;
 import com.zt.nightrun.activity.TeamMemberListActivity;
@@ -54,23 +64,6 @@ public class TeamFragment extends BaseFragment implements IXListViewRefreshListe
 
                 case 1:
 
-                    dismissLoadingDialog();
-                    String content ="你已成功创建组队xxx山地之狼现在通过微信邀请你的好友来参加吧";
-                    CustomSuccessDialog successDialog = new CustomSuccessDialog(getActivity(), content, new CustomSuccessDialog.OnClickListener() {
-                        @Override
-                        public void onLeftClick(CustomSuccessDialog dialog) {
-                            dialog.dismiss();
-
-                        }
-
-                        @Override
-                        public void onRightClick(CustomSuccessDialog dialog) {
-                            dialog.dismiss();
-
-                        }
-                    });
-                    successDialog.show();
-
                     break;
             }
         }
@@ -102,7 +95,7 @@ public class TeamFragment extends BaseFragment implements IXListViewRefreshListe
                         if(!TextUtils.isEmpty(string)){
                             dialog.dismiss();
                             showLoadingDialog();
-                            handler.sendMessageDelayed(handler.obtainMessage(1),2000);
+                            reqCreateGroup(string);
                         }else{
                             ToastUtils.show(getActivity(),"请输入组队名称");
                         }
@@ -136,5 +129,50 @@ public class TeamFragment extends BaseFragment implements IXListViewRefreshListe
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         startActivity(new Intent(getActivity(), TeamDetailsActivity.class));
+    }
+
+    private void reqCreateGroup(String name){
+
+        final ReqCreateGroup reqCreateGroup = new ReqCreateGroup();
+        reqCreateGroup.setName(name);
+        HttpRequestProxy.get().create(reqCreateGroup, new AbsHttpRequestProxy.RequestListener() {
+            @Override
+            public void onSuccess(Object response) {
+
+                Log.i("info",response.toString());
+                RespCreateGroup respCreateGroup =(RespCreateGroup) response;
+                if(respCreateGroup.getCode()==0){
+                    dismissLoadingDialog();
+                    ToastUtils.show(getActivity(),"创建组队成功");
+                    Group group =respCreateGroup.getData().getGroup();
+                    String content ="你已成功创建组队"+group.getName()+"现在通过微信邀请你的好友来参加吧";
+                    CustomSuccessDialog successDialog = new CustomSuccessDialog(getActivity(), content, new CustomSuccessDialog.OnClickListener() {
+                        @Override
+                        public void onLeftClick(CustomSuccessDialog dialog) {
+                            dialog.dismiss();
+
+                        }
+
+                        @Override
+                        public void onRightClick(CustomSuccessDialog dialog) {
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                    successDialog.show();
+                }else{
+                    ToastUtils.show(getActivity(),"创建组队失败");
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                Log.i("info",error.toString());
+                dismissLoadingDialog();
+                ToastUtils.show(getActivity(),error.toString());
+            }
+        }).tag(this.toString()).build().excute();
+
     }
 }

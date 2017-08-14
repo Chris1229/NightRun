@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_F1F1F4"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     >
 
     <LinearLayout
@@ -12,13 +13,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/color_white"
-        android:layout_marginTop="18dp">
+        android:layout_marginTop="18dp"
+        android:gravity="center_horizontal">
 
         <RelativeLayout
             android:id="@+id/teamListId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -56,7 +58,7 @@
             android:id="@+id/colorId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -94,7 +96,7 @@
             android:id="@+id/memberLocationId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -132,8 +134,9 @@
             android:id="@+id/teamCodeId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
+            android:visibility="gone"
             >
 
             <TextView
@@ -152,7 +155,24 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
+            android:background="@color/color_F1F1F4"
+            />
+
+        <TextView
+            android:id="@+id/openTeam"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="开启活动"
+            android:textColor="#D18484"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:background="@drawable/layout_selecter_bg"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
             android:background="@color/color_F1F1F4"
             />
 
@@ -160,11 +180,30 @@
             android:id="@+id/overTeam"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="结束组队"
+            android:text="解散组队"
             android:textColor="#D18484"
             android:textSize="15sp"
             android:gravity="center"
+            android:background="@drawable/layout_selecter_bg"
             />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/vCodeImg"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:gravity="clip_horizontal"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/code"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="组队二维码"
+        android:textColor="@color/color_35304F"
+        android:textSize="15sp"
+        android:gravity="center"
+        />
 </LinearLayout>

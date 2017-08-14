@@ -35,6 +35,7 @@ public class BaseActivity extends FragmentActivity {
 
     public ImageView imgAction;
     public TextView tvBack;
+    public TextView tvRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,14 @@ public class BaseActivity extends FragmentActivity {
 
     public void setTitle(String title) {
         ((TextView) findViewById(R.id.tv_title)).setText(title);
+    }
+
+    public TextView setRightTv(String title) {
+        tvRight =(TextView)findViewById(R.id.tv_right);
+        tvRight.setVisibility(View.VISIBLE);
+        tvRight.setText(title);
+
+        return tvRight;
     }
 
     public ImageView setRightImage(int id) {

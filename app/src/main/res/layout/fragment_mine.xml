@@ -33,6 +33,39 @@
         android:background="@color/color_white">
 
         <RelativeLayout
+            android:id="@+id/personInfoId"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/color_white"
+            android:paddingLeft="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="编辑资料"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:textColor="@color/color_35304F"
+                android:drawableLeft="@mipmap/mine_fankui"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_arrow_right_grey"
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:id="@+id/tuijianId"
             android:layout_width="match_parent"
             android:layout_height="45dp"

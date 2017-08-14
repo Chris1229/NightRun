@@ -1,17 +1,25 @@
 package com.zt.nightrun.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.android.volley.error.VolleyError;
+import com.chris.common.image.ImageUtils;
+import com.chris.common.network.HttpRequestProxy;
 import com.chris.common.utils.ToastUtils;
+import com.chris.common.view.BaseActivity;
+import com.quncao.core.http.AbsHttpRequestProxy;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
 import com.zt.nightrun.fragment.DeviceFragment;
@@ -19,8 +27,13 @@ import com.zt.nightrun.fragment.FindFragment;
 import com.zt.nightrun.fragment.MallFragment;
 import com.zt.nightrun.fragment.MineFragment;
 import com.zt.nightrun.fragment.TeamFragment;
+import com.zt.nightrun.model.req.ReqActiveDevice;
+import com.zt.nightrun.model.req.ReqDeviceList;
+import com.zt.nightrun.model.resp.RespActiveDevice;
+import com.zt.nightrun.model.resp.RespDeviceList;
+import com.zt.nightrun.zxing.activity.CaptureActivity;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener{
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener{
     private long exitTime = 0;
     private RelativeLayout mTopLinar;
     private FragmentManager fragmentManager;
@@ -32,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private MallFragment mallFragment;
     private MineFragment mineFragment;
     private ImageView headImg;
+    private TextView tvNick;
     private ImageView messageImg;
     private ImageView addImg;
 
@@ -49,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         mRadioGroup =(RadioGroup)findViewById(R.id.rg_radio);
         mTopLinar =(RelativeLayout)findViewById(R.id.topLinear);
         headImg =(ImageView)findViewById(R.id.headImageId);
+        tvNick =(TextView)findViewById(R.id.tvNick);
         messageImg =(ImageView)findViewById(R.id.messageId);
         addImg =(ImageView)findViewById(R.id.addPeopleId);
         headImg.setOnClickListener(this);
@@ -56,6 +71,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         addImg.setOnClickListener(this);
         mRadioGroup.setOnCheckedChangeListener(this);
         mRadioGroup.check(R.id.radioBtn_device);
+        if(!TextUtils.isEmpty(NightRunApplication.getInstance().nick)){
+            tvNick.setText(NightRunApplication.getInstance().nick);
+        }
+
+        ImageUtils.loadCircleImage(this,"http://img.qq1234.org/uploads/allimg/141010/3_141010111902_4.png",R.mipmap.default_avtar,headImg);
     }
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -153,11 +173,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 break;
             //消息
             case R.id.messageId:
-
+                startActivity(new Intent(this,MessageActivity.class));
                 break;
             //添加
             case R.id.addPeopleId:
-                startActivity(new Intent(this,LoginActivity.class));
+                startActivity(new Intent(this,CaptureActivity.class));
                 break;
 
         }

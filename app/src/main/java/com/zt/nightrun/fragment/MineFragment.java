@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.chris.common.view.BaseFragment;
 import com.zt.nightrun.R;
 import com.zt.nightrun.activity.FindPassWordActivity;
+import com.zt.nightrun.activity.PersonInfoActivity;
 
 /**
  * 作者：by chris
@@ -20,7 +21,7 @@ import com.zt.nightrun.activity.FindPassWordActivity;
 
 public class MineFragment extends BaseFragment implements View.OnClickListener{
 
-    private RelativeLayout mTuiJianLayout,mWeixinLayout,mRevisePassWordLayout,mRefundLayout,mHelpLayout,mAboutLayout;
+    private RelativeLayout mPersonInfoLayout, mTuiJianLayout,mWeixinLayout,mRevisePassWordLayout,mRefundLayout,mHelpLayout,mAboutLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,13 +36,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view =inflater.inflate(R.layout.fragment_mine,null);
-
+        mPersonInfoLayout =(RelativeLayout)view.findViewById(R.id.personInfoId);
         mTuiJianLayout =(RelativeLayout)view.findViewById(R.id.tuijianId);
         mWeixinLayout =(RelativeLayout)view.findViewById(R.id.bangdingweixinId);
         mRevisePassWordLayout =(RelativeLayout)view.findViewById(R.id.revisepasswordId);
         mRefundLayout =(RelativeLayout)view.findViewById(R.id.refundId);
         mHelpLayout =(RelativeLayout)view.findViewById(R.id.helpId);
         mAboutLayout =(RelativeLayout)view.findViewById(R.id.aboutId);
+        mPersonInfoLayout.setOnClickListener(this);
         mTuiJianLayout.setOnClickListener(this);
         mWeixinLayout.setOnClickListener(this);
         mRevisePassWordLayout.setOnClickListener(this);
@@ -56,6 +58,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+
+            case R.id.personInfoId:
+                startActivity(new Intent(getActivity(), PersonInfoActivity.class));
+                break;
 
             case R.id.tuijianId:
 

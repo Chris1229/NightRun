@@ -3,8 +3,10 @@ package com.zt.nightrun;
 import com.baidu.mapapi.SDKInitializer;
 import com.chris.common.KeelApplication;
 import com.quncao.core.http.HttpRequestManager;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.zt.nightrun.wxapi.WxConstants;
 
 /**
@@ -17,6 +19,12 @@ public class NightRunApplication extends KeelApplication {
 
     private static NightRunApplication singleton;
     public static IWXAPI mWxApi;
+    public int userId;
+    public String name;
+    public String mobile;
+    public String nick;
+    public String image;
+    public int gender;
 
     @Override
     public void onCreate() {
@@ -28,6 +36,13 @@ public class NightRunApplication extends KeelApplication {
         SDKInitializer.initialize(getApplicationContext());
 
         registToWX();
+
+        //初始化友盟分享
+        UMShareAPI.get(this);
+
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad");
     }
 
     @Override

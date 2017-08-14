@@ -1,6 +1,7 @@
 package com.quncao.core.http;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -164,6 +165,7 @@ public abstract class AbsHttpRequestProxy<T> {
             params = new TreeMap<String, String>();
         }
         params.putAll(getRequestParamMap(requestParamBody));
+        Log.i("info========",params.toString());
         if (gzip) {
             request = new GZipRequest(Method.POST, requestUrl, new Listener<String>() {
                 @Override

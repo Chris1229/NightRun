@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 22
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "com.zt.nightrun"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -47,22 +47,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.quncaosign
             manifestPlaceholders = [
-                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
-                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
-                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
+                    PUSH_APPID_VALUE    : "zruR4ZOMgQ9CKjNefFM4c4",
+                    PUSH_APPKEY_VALUE   : "0NrsY5NBWZ5YBdsVXOErX6",
+                    PUSH_APPSECRET_VALUE: "SsXJj1cFha6I8maaV9cQc6",
                     PUSH_PROVIDER       : "downloads.com.zt.nightrun",
                     PUSH_PERMISSION     : "getui.permission.GetuiService.com.zt.nightrun",
-                    BAIDU_KEY           : "B2dGs75tSowbqcHQENj7rGn2",
+                    BAIDU_KEY           : "SGd7e0yyuK4O0hBmzCHLGAjdcufe5ibI",
             ]
         }
 
         debug {
             signingConfig signingConfigs.quncaosign
-            applicationIdSuffix ".debug"
             manifestPlaceholders = [
-                    PUSH_APPID_VALUE    : "rkoA9ZfyWK9GRtp50iwiG6",
-                    PUSH_APPKEY_VALUE   : "Y6L8IhVjaw9Y51NEKBJyp4",
-                    PUSH_APPSECRET_VALUE: "u61wwE61Lo99SdtNfYWkH4",
+                    PUSH_APPID_VALUE    : "zruR4ZOMgQ9CKjNefFM4c4",
+                    PUSH_APPKEY_VALUE   : "0NrsY5NBWZ5YBdsVXOErX6",
+                    PUSH_APPSECRET_VALUE: "SsXJj1cFha6I8maaV9cQc6",
                     PUSH_PROVIDER       : "downloads.com.zt.nightrun.debug",
                     PUSH_PERMISSION     : "getui.permission.GetuiService.com.zt.nightrun.debug",
                     BAIDU_KEY           : "SGd7e0yyuK4O0hBmzCHLGAjdcufe5ibI",
@@ -79,4 +78,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
     testCompile 'junit:junit:4.12'
     compile project(':common')
+    compile 'com.upyun:upyun-android-sdk:2.0.4'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.0'
 }

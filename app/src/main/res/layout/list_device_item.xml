@@ -14,6 +14,7 @@
         android:layout_marginBottom="22dp">
 
         <TextView
+            android:id="@+id/tvNickName"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:background="@drawable/shape_blue_bg"
@@ -39,6 +40,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/tvDeviceName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="强化训练营"
@@ -56,6 +58,7 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/text_bg_white"
                     android:padding="2dp"
+                    android:visibility="gone"
                     />
             </RelativeLayout>
 
@@ -78,14 +81,21 @@
                    android:layout_height="wrap_content"
                    android:orientation="vertical">
 
+                   <ImageView
+                       android:id="@+id/powerImage"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@mipmap/battery_normal"
+                       android:layout_marginBottom="4dp"
+                       />
+
                    <TextView
+                       android:id="@+id/powerId"
                        android:layout_width="wrap_content"
                        android:layout_height="match_parent"
                        android:text="80%"
                        android:textColor="@color/color_white"
                        android:textSize="13sp"
-                       android:drawableTop="@mipmap/battery_normal"
-                       android:drawablePadding="2dp"
                        />
 
                </LinearLayout>
@@ -95,6 +105,7 @@
                     android:background="@color/color_B0B0B0" />
 
                 <TextView
+                    android:id="@+id/type"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
@@ -110,6 +121,7 @@
                     android:background="@color/color_B0B0B0"/>
 
                 <TextView
+                    android:id="@+id/statusId"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"

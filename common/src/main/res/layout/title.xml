@@ -39,4 +39,19 @@
         android:paddingRight="16dp"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#9489D7"
+        android:textSize="18sp"
+        android:text=""
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        />
+
 </RelativeLayout>

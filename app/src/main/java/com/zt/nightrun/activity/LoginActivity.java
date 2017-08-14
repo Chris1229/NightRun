@@ -4,15 +4,26 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.error.VolleyError;
+import com.chris.common.KeelApplication;
+import com.chris.common.network.HttpRequestProxy;
+import com.chris.common.utils.Md5Utils;
+import com.chris.common.utils.SharedPreferencesUtil;
 import com.chris.common.utils.ToastUtils;
 import com.chris.common.view.BaseActivity;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.quncao.core.http.AbsHttpRequestProxy;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
+import com.zt.nightrun.model.req.ReqLogin;
+import com.zt.nightrun.model.resp.RespLogin;
+import com.zt.nightrun.model.resp.User;
 
 import java.util.List;
 
@@ -68,6 +79,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
             case R.id.ensureLoginId:
 
+                if(!TextUtils.isEmpty(etPhoneNum.getText().toString())){
+                    if(!TextUtils.isEmpty(etPassword.getText().toString())){
+                        reqLogin();
+                    }else{
+                        ToastUtils.show(this,"请输入密码");
+                    }
+                }else{
+                    ToastUtils.show(this,"请输入手机号");
+                }
+
                 break;
 
             case R.id.tvRegisterId:
@@ -103,5 +124,45 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         }
         return false;
+    }
+
+    private void reqLogin(){
+        final ReqLogin reqLogin = new ReqLogin();
+        reqLogin.setMobile(etPhoneNum.getText().toString());
+        reqLogin.setPassword(Md5Utils.Md5(etPassword.getText().toString()));
+        HttpRequestProxy.get().create(reqLogin, new AbsHttpRequestProxy.RequestListener() {
+            @Override
+            public void onSuccess(Object response) {
+
+                Log.i("info",response.toString());
+                RespLogin respLogin =(RespLogin)response;
+                if(respLogin.getData()!=null && respLogin.getData().getUser()!=null){
+                    ToastUtils.show(LoginActivity.this,"登录成功");
+                    User user =respLogin.getData().getUser();
+                    SharedPreferencesUtil.saveInteger(KeelApplication.getApplicationConext(),"userId",user.getId());
+                    SharedPreferencesUtil.saveString(KeelApplication.getApplicationConext(),"mobile",user.getMobile());
+                    SharedPreferencesUtil.saveString(KeelApplication.getApplicationConext(),"password",user.getPassword());
+                    SharedPreferencesUtil.saveString(KeelApplication.getApplicationConext(),"nick",user.getNick());
+                    SharedPreferencesUtil.saveString(KeelApplication.getApplicationConext(),"image",user.getImage());
+                    SharedPreferencesUtil.saveInteger(KeelApplication.getApplicationConext(),"gender",user.getGender());
+                    NightRunApplication.getInstance().userId =user.getId();
+                    NightRunApplication.getInstance().mobile =user.getMobile();
+                    NightRunApplication.getInstance().nick =user.getNick();
+                    NightRunApplication.getInstance().image =user.getImage();
+                    NightRunApplication.getInstance().gender =user.getGender();
+
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    finish();
+                }else{
+                    ToastUtils.show(LoginActivity.this,respLogin.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                Log.i("info",error.toString());
+                ToastUtils.show(LoginActivity.this,error.toString());
+            }
+        }).tag(this.toString()).build().excute();
     }
 }

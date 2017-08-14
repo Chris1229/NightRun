@@ -5,13 +5,22 @@
 
 package com.chris.common.network;
 
+import android.os.Build;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+
 import com.android.volley.error.NetworkError;
 import com.android.volley.error.NoConnectionError;
 import com.android.volley.error.ParseError;
 import com.android.volley.error.ServerError;
 import com.android.volley.error.TimeoutError;
 import com.android.volley.error.VolleyError;
+import com.chris.common.KeelApplication;
 import com.chris.common.network.model.BaseModel;
+import com.chris.common.utils.DeviceUuidFactory;
+import com.chris.common.utils.NetworkUtil;
+import com.chris.common.utils.SDeviceUtil;
+import com.chris.common.utils.SharedPreferencesUtil;
 import com.quncao.core.http.AbsHttpRequestProxy;
 import com.quncao.core.http.annotation.HttpReqParam;
 
@@ -48,14 +57,17 @@ public class HttpRequestProxy extends AbsHttpRequestProxy {
 
     protected String getDomain() {
 //        return EAPIConstants.getUserUrl();
-        return "http://192.168.30.201:80/";
+        return "http://www.carnote.cn/yxsq/";
     }
 
     protected TreeMap<String, String> getCommonParamMap() {
 //        String version = LarkUtils.getVersion(KeelApplication.getApplicationConext());
         TreeMap commonParam = new TreeMap();
-        commonParam.put("protocol_ver", "1");
-        commonParam.put("platformType", "2");
+        commonParam.put("clintInfo", getClientInfo());
+        if(!TextUtils.isEmpty(SharedPreferencesUtil.getString(KeelApplication.getApplicationConext(),"sessionid"))){
+            commonParam.put("sessionid", SharedPreferencesUtil.getString(KeelApplication.getApplicationConext(),"sessionid"));
+        }
+//        commonParam.put("platformType", "2");
 //        commonParam.put("ver", version);
         return commonParam;
     }
@@ -147,4 +159,33 @@ public class HttpRequestProxy extends AbsHttpRequestProxy {
             return new HttpRequestProxy(this);
         }
     }
+
+    public static String getClientInfo() {
+        String uniqid = getUniqId();
+        DisplayMetrics displayMetrics = KeelApplication.getApplicationConext().getResources().getDisplayMetrics();
+        String screen = String.format("%d*%d", displayMetrics.widthPixels, displayMetrics.heightPixels);
+        String imei = SDeviceUtil.getImei(KeelApplication.getApp().getApplicationContext());
+
+        StringBuilder result = new StringBuilder();
+        result.append("{\"model\":").append("\"").append(SDeviceUtil.getDeviceModel()).append("\",");
+        if(!TextUtils.isEmpty(imei)){
+            result.append("\"idfa\":").append("\"").append(imei).append("\",");
+        }
+        result.append("\"os\":").append("\"").append(Build.VERSION.RELEASE).append("\",");
+        result.append("\"screen\":").append("\"").append(screen).append("\",");
+        result.append("\"uniqId\":").append("\"").append(uniqid).append("\",");
+        if(NetworkUtil.isUsingMobileNetwork()){
+            result.append("\"networkState\":").append("\"").append("4").append("\",");
+        }else if(NetworkUtil.isWIFIAvailable(KeelApplication.getApplicationConext())){
+            result.append("\"networkState\":").append("\"").append("6").append("\",");
+        }
+        return result.toString();
+    }
+
+
+    private static String getUniqId() {
+        DeviceUuidFactory uuidFactory = new DeviceUuidFactory(KeelApplication.getApplicationConext());
+        return uuidFactory.getDeviceUuid().toString();
+    }
+
 }

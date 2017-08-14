@@ -22,7 +22,7 @@
                android:id="@+id/shouquanId"
                android:layout_width="match_parent"
                android:layout_height="45dp"
-               android:background="@color/color_white"
+               android:background="@drawable/layout_selecter_bg"
                android:paddingLeft="15dp"
                >
 
@@ -60,7 +60,7 @@
                android:id="@+id/locationId"
                android:layout_width="match_parent"
                android:layout_height="45dp"
-               android:background="@color/color_white"
+               android:background="@drawable/layout_selecter_bg"
                android:paddingLeft="15dp"
                >
 
@@ -98,7 +98,7 @@
                android:id="@+id/historyGuiJiId"
                android:layout_width="match_parent"
                android:layout_height="45dp"
-               android:background="@color/color_white"
+               android:background="@drawable/layout_selecter_bg"
                android:paddingLeft="15dp"
                >
 
@@ -132,27 +132,27 @@
                android:background="@color/color_F1F1F4"
                android:layout_marginLeft="15dp"/>
 
-           <RelativeLayout
-               android:id="@+id/wramingTimeId"
-               android:layout_width="match_parent"
-               android:layout_height="45dp"
-               android:background="@color/color_white"
-               android:paddingLeft="15dp"
-               >
+           <!--<RelativeLayout-->
+               <!--android:id="@+id/wramingTimeId"-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:layout_height="45dp"-->
+               <!--android:background="@color/color_white"-->
+               <!--android:paddingLeft="15dp"-->
+               <!--&gt;-->
 
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:text="设置预警定位时间"
-                   android:layout_centerVertical="true"
-                   android:textSize="15sp"
-                   android:textColor="@color/color_35304F"
-                   android:drawableLeft="@mipmap/device_detail_time"
-                   android:drawablePadding="12dp"
-                   android:gravity="center_vertical"
-                   />
+               <!--<TextView-->
+                   <!--android:layout_width="wrap_content"-->
+                   <!--android:layout_height="match_parent"-->
+                   <!--android:text="设置预警定位时间"-->
+                   <!--android:layout_centerVertical="true"-->
+                   <!--android:textSize="15sp"-->
+                   <!--android:textColor="@color/color_35304F"-->
+                   <!--android:drawableLeft="@mipmap/device_detail_time"-->
+                   <!--android:drawablePadding="12dp"-->
+                   <!--android:gravity="center_vertical"-->
+                   <!--/>-->
 
-           </RelativeLayout>
+           <!--</RelativeLayout>-->
 
            <View
                android:layout_width="match_parent"

@@ -9,6 +9,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.zt.nightrun.R;
+import com.zt.nightrun.model.resp.Friend;
+
+import java.util.List;
 
 /**
  * 作者：by chris
@@ -18,14 +21,16 @@ import com.zt.nightrun.R;
 
 public class AuthorityMemberListAdapter extends BaseAdapter {
     private Context mContext;
+    private List<Friend> lists;
 
-    public AuthorityMemberListAdapter(Context mContext) {
+    public AuthorityMemberListAdapter(Context mContext,List<Friend> list) {
         this.mContext = mContext;
+        this.lists =list;
     }
 
     @Override
     public int getCount() {
-        return 8;
+        return lists.size();
     }
 
     @Override
@@ -52,6 +57,9 @@ public class AuthorityMemberListAdapter extends BaseAdapter {
         }else{
             viewHolder =(ViewHolder)convertView.getTag();
         }
+
+        final Friend friend =lists.get(position);
+        viewHolder.tvName.setText("好友-"+friend.getMobile());
 
         return convertView;
     }
