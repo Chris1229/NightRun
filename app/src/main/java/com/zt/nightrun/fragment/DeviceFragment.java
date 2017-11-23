@@ -53,7 +53,7 @@ public class DeviceFragment extends BaseFragment implements AdapterView.OnItemCl
     private View headView;
     private List<DeviceItem> list = new ArrayList<>();
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -92,21 +92,22 @@ public class DeviceFragment extends BaseFragment implements AdapterView.OnItemCl
         addLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomEditDialog dialog = new CustomEditDialog(getActivity(), "设备uid", "输入一个设备uid", InputType.TYPE_CLASS_NUMBER, new CustomEditDialog.OnOkListener() {
-                    @Override
-                    public void onOkClick(CustomEditDialog dialog, String string) {
-
-                        if (!TextUtils.isEmpty(string)) {
-                            dialog.dismiss();
-                            showLoadingDialog();
-                            reqActiveDevice(string);
-                        } else {
-                            ToastUtils.show(getActivity(), "请输入设备uid");
-                        }
-                    }
-                });
-
-                dialog.show();
+//                CustomEditDialog dialog = new CustomEditDialog(getActivity(), "设备uid", "输入一个设备uid", InputType.TYPE_CLASS_NUMBER, new CustomEditDialog.OnOkListener() {
+//                    @Override
+//                    public void onOkClick(CustomEditDialog dialog, String string) {
+//
+//                        if (!TextUtils.isEmpty(string)) {
+//                            dialog.dismiss();
+//                            showLoadingDialog();
+//                            reqActiveDevice(string);
+//                        } else {
+//                            ToastUtils.show(getActivity(), "请输入设备uid");
+//                        }
+//                    }
+//                });
+//
+//                dialog.show();
+                startActivity(new Intent(getActivity(),CaptureActivity.class));
             }
         });
         return view;
@@ -117,10 +118,15 @@ public class DeviceFragment extends BaseFragment implements AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //        Log.i("info===--",position+"");
         position = position - 2;
-        Intent intent = new Intent(getActivity(), DeviceDetailsActivity.class);
-        intent.putExtra("uid", list.get(position).getDevice().getUid());
-        intent.putExtra("deviceId", list.get(position).getDevice().getId());
-        startActivity(intent);
+        if(position>=0){
+            Intent intent = new Intent(getActivity(), DeviceDetailsActivity.class);
+            intent.putExtra("uid", list.get(position).getDevice().getUid());
+            intent.putExtra("deviceId", list.get(position).getDevice().getId());
+            if(!TextUtils.isEmpty(list.get(position).getDevice().getName())){
+                intent.putExtra("deviceName", list.get(position).getDevice().getName());
+            }
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -143,7 +149,7 @@ public class DeviceFragment extends BaseFragment implements AdapterView.OnItemCl
             @Override
             public void onSuccess(Object response) {
                 dismissLoadingDialog();
-                handler.sendEmptyMessageDelayed(0,1000);
+                handler.sendEmptyMessageDelayed(0, 500);
                 Log.i("info", response.toString());
                 RespDeviceList respDeviceList = (RespDeviceList) response;
                 if (respDeviceList.getData() != null && respDeviceList.getData().getListDeviceVo() != null && respDeviceList.getData().getListDeviceVo().size() > 0) {
@@ -165,7 +171,7 @@ public class DeviceFragment extends BaseFragment implements AdapterView.OnItemCl
             @Override
             public void onFailed(VolleyError error) {
                 Log.i("info", error.toString());
-                handler.sendEmptyMessageDelayed(0,1000);
+                handler.sendEmptyMessageDelayed(0, 500);
                 dismissLoadingDialog();
                 ToastUtils.show(getActivity(), error.toString());
             }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class ReqActiveGroup implements Serializable {
 
     private int groupId;
-    private boolean isActive;
+    private int isActive;
 
     public int getGroupId() {
         return groupId;
@@ -24,12 +24,12 @@ public class ReqActiveGroup implements Serializable {
         this.groupId = groupId;
     }
 
-    public boolean isActive() {
+    public int getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
     }
 
     @Override

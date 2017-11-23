@@ -9,6 +9,7 @@ package com.zt.nightrun.wxapi;
 public class WxConstants {
     //微信开放平台AppID
     //请同时修改  androidmanifest.xml里面，.PayActivityd里的属性<data android:scheme="wxb4ba3c02aa476ea1"/>为新设置的appid
-    public static final String APP_ID = "wx14a7de44027ba49c";
+//    public static final String APP_ID = "wx2e98fdf5aa444270";
+    public static final String APP_ID = "wx2e98fdf5aa444270";
 
 }

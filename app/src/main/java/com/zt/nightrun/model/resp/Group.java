@@ -20,6 +20,7 @@ public class Group implements Serializable {
 //            "createTime": "Aug 11, 2017 2:01:54 PM"
     private int id;
     private String name;
+    private String image;
     private int ownerId;
     private String code;
     private int status;
@@ -41,6 +42,14 @@ public class Group implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getOwnerId() {
@@ -96,6 +105,7 @@ public class Group implements Serializable {
         return "Group{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
                 ", ownerId=" + ownerId +
                 ", code='" + code + '\'' +
                 ", status=" + status +

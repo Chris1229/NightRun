@@ -1,5 +1,6 @@
 package com.zt.nightrun.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,10 +16,15 @@ import com.chris.common.view.BaseActivity;
 import com.quncao.core.http.AbsHttpRequestProxy;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
+import com.zt.nightrun.eventbus.TeamName;
 import com.zt.nightrun.model.req.ReqModify;
-import com.zt.nightrun.model.resp.RespLogin;
+import com.zt.nightrun.model.req.ReqModifyTeamInfo;
+import com.zt.nightrun.model.resp.Group;
 import com.zt.nightrun.model.resp.RespModify;
+import com.zt.nightrun.model.resp.RespModifyTeamInfo;
 import com.zt.nightrun.model.resp.User;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 作者：by chris
@@ -28,17 +34,26 @@ import com.zt.nightrun.model.resp.User;
 
 public class ModifyNickNameActivity extends BaseActivity {
     private EditText etNickName;
+    private int type;
+    private int groupId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_modify_nickname,true);
 
+        Intent intent =getIntent();
+        type =intent.getIntExtra("type",0);
+        groupId =intent.getIntExtra("groupId",0);
         initView();
     }
 
     private void initView(){
-        setTitle("编辑昵称");
+        if(type ==1){
+            setTitle("编辑组队昵称");
+        }else{
+            setTitle("编辑昵称");
+        }
 
         etNickName =(EditText)findViewById(R.id.etNickName);
 
@@ -47,7 +62,11 @@ public class ModifyNickNameActivity extends BaseActivity {
             public void onClick(View v) {
 
                 if(!TextUtils.isEmpty(etNickName.getText())){
-                    reqModifyPerson();
+                    if(type ==1){
+                        reqTeamName();
+                    }else{
+                        reqModifyPerson();
+                    }
                 }else{
                     ToastUtils.show(ModifyNickNameActivity.this,"昵称不能为空");
                 }
@@ -84,6 +103,34 @@ public class ModifyNickNameActivity extends BaseActivity {
             public void onFailed(VolleyError error) {
                 Log.i("info",error.toString());
                 ToastUtils.show(ModifyNickNameActivity.this,error.toString());
+            }
+        }).tag(this.toString()).build().excute();
+    }
+
+    private void reqTeamName() {
+        ReqModifyTeamInfo reqModify = new ReqModifyTeamInfo();
+        reqModify.setGroupId(groupId);
+        reqModify.setName(etNickName.getText().toString());
+        HttpRequestProxy.get().create(reqModify, new AbsHttpRequestProxy.RequestListener() {
+            @Override
+            public void onSuccess(Object response) {
+
+                Log.i("info", response.toString());
+                RespModifyTeamInfo respModify = (RespModifyTeamInfo) response;
+                if (respModify.getData() != null && respModify.getData().getGroup() != null) {
+                    ToastUtils.show(ModifyNickNameActivity.this, "组队昵称修改成功");
+                    Group group = respModify.getData().getGroup();
+                    EventBus.getDefault().post(new TeamName(group.getName()));
+                    finish();
+                } else {
+                    ToastUtils.show(ModifyNickNameActivity.this, respModify.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                Log.i("info", error.toString());
+                ToastUtils.show(ModifyNickNameActivity.this, error.toString());
             }
         }).tag(this.toString()).build().excute();
     }

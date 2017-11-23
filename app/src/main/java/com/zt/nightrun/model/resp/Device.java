@@ -15,6 +15,8 @@ public class Device implements Serializable {
     private int isActive;
     private int activeUserId;
     private String name;
+    private double lat;
+    private double lng;
     private String lastTime;
     private String createTime;
     private String activeTime;
@@ -60,6 +62,22 @@ public class Device implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public String getLastTime() {
@@ -118,6 +136,8 @@ public class Device implements Serializable {
                 ", isActive=" + isActive +
                 ", activeUserId=" + activeUserId +
                 ", name='" + name + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
                 ", lastTime='" + lastTime + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", activeTime='" + activeTime + '\'' +

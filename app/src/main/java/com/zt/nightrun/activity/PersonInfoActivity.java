@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.android.volley.error.VolleyError;
 import com.baidu.mapapi.map.Text;
 import com.chris.common.KeelApplication;
+import com.chris.common.image.ImageUtils;
 import com.chris.common.network.HttpRequestProxy;
 import com.chris.common.utils.AppUtil;
 import com.chris.common.utils.FileUtil;
@@ -32,6 +34,7 @@ import com.chris.common.view.BaseActivity;
 import com.quncao.core.http.AbsHttpRequestProxy;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
+import com.zt.nightrun.eventbus.UserImg;
 import com.zt.nightrun.model.req.ReqModify;
 import com.zt.nightrun.model.resp.RespModify;
 import com.zt.nightrun.model.resp.User;
@@ -39,6 +42,8 @@ import com.zt.nightrun.upyun.IUploadFileCallback;
 import com.zt.nightrun.upyun.MUploadFile;
 import com.zt.nightrun.upyun.UploadPic;
 import com.zt.nightrun.view.CActionSheetDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.InputStream;
@@ -76,6 +81,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     private RelativeLayout sexLayout;
     private TextView tvNick;
     private TextView tvSex;
+    private ImageView img_avatar;
     private CActionSheetDialog shareDialog;
 
     @Override
@@ -83,20 +89,19 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_person_info, true);
-
+        Intent intent = getIntent();
         initView();
     }
 
     private void initView() {
 
         setTitle("个人信息");
-
         headLinear = (LinearLayout) findViewById(R.id.layout_user_icon);
         nickNameLinear = (LinearLayout) findViewById(R.id.layout_user_nick_name);
         sexLayout = (RelativeLayout) findViewById(R.id.layout_sex);
         tvNick = (TextView) findViewById(R.id.tv_nick_name);
         tvSex = (TextView) findViewById(R.id.tv_sex);
-
+        img_avatar =(ImageView)findViewById(R.id.img_avatar);
         headLinear.setOnClickListener(this);
         nickNameLinear.setOnClickListener(this);
         sexLayout.setOnClickListener(this);
@@ -106,6 +111,10 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             tvSex.setText("男");
         } else {
             tvSex.setText("女");
+        }
+        if(!TextUtils.isEmpty(NightRunApplication.getInstance().image)){
+            Log.i("info=====-",NightRunApplication.getInstance().image);
+            ImageUtils.loadCircleImage(this,NightRunApplication.getInstance().image,R.mipmap.default_avtar,img_avatar);
         }
     }
 
@@ -198,7 +207,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
      */
     private void getloaclPic() {
         /*Intent intent = new Intent();
-		intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
 		intent.setType("image/*");
 		startActivityForResult(intent, CHOOSE_LOCAL_PICTURE);*/
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -316,7 +325,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         }
         if (isSuccess) {
             imgFilePath = fileName;
-//			img_avatar.setImageBitmap(bitmap);
+			img_avatar.setImageBitmap(bitmap);
             if (!TextUtils.isEmpty(imgFilePath)) {
                 ArrayList<String> uploadList = new ArrayList<String>();
                 uploadList.add(imgFilePath);
@@ -349,8 +358,8 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             public void onData(Object output, Object input) {
                 dismissLoadingDialog();
                 MUploadFile uploadFile = (MUploadFile) output;
-                if(!TextUtils.isEmpty(uploadFile.getUrl())){
-                    reqModifyHeadImage("http://yxsq-zt.b0.aicdn.com/"+uploadFile.getUrl());
+                if (!TextUtils.isEmpty(uploadFile.getUrl())) {
+                    reqModifyHeadImage("http://image.carnote.cn/" + uploadFile.getUrl());
                 }
                 Log.i("info----===", uploadFile.toString());
             }
@@ -468,7 +477,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         return inSampleSize;
     }
 
-    private void reqModifyHeadImage(String imageUrl){
+    private void reqModifyHeadImage(String imageUrl) {
         final ReqModify reqModify = new ReqModify();
         reqModify.setImage(imageUrl);
         reqModify.setNick(NightRunApplication.getInstance().nick);
@@ -477,22 +486,23 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSuccess(Object response) {
 
-                Log.i("info",response.toString());
-                RespModify respModify =(RespModify)response;
-                if(respModify.getData()!=null && respModify.getData().getUser()!=null){
-                    ToastUtils.show(PersonInfoActivity.this,"头像修改成功");
-                    User user =respModify.getData().getUser();
-                    SharedPreferencesUtil.saveString(KeelApplication.getApplicationConext(),"image",user.getImage());
-                    NightRunApplication.getInstance().gender =user.getGender();
-                }else{
-                    ToastUtils.show(PersonInfoActivity.this,respModify.getMessage());
+                Log.i("info", response.toString());
+                RespModify respModify = (RespModify) response;
+                if (respModify.getData() != null && respModify.getData().getUser() != null) {
+                    ToastUtils.show(PersonInfoActivity.this, "头像修改成功");
+                    User user = respModify.getData().getUser();
+                    SharedPreferencesUtil.saveString(KeelApplication.getApplicationConext(), "image", user.getImage());
+                    NightRunApplication.getInstance().gender = user.getGender();
+                    EventBus.getDefault().post(new UserImg(user.getImage()));
+                } else {
+                    ToastUtils.show(PersonInfoActivity.this, respModify.getMessage());
                 }
             }
 
             @Override
             public void onFailed(VolleyError error) {
-                Log.i("info",error.toString());
-                ToastUtils.show(PersonInfoActivity.this,error.toString());
+                Log.i("info", error.toString());
+                ToastUtils.show(PersonInfoActivity.this, error.toString());
             }
         }).tag(this.toString()).build().excute();
     }

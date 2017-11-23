@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <SurfaceView
         android:id="@+id/capture_preview"
@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/capture_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/capture_mask_top"
@@ -26,7 +26,7 @@
             android:layout_height="240dp"
             android:layout_below="@id/capture_mask_top"
             android:layout_centerHorizontal="true"
-            android:background="@mipmap/qr_code_bg" >
+            android:background="@mipmap/qr_code_bg">
 
             <ImageView
                 android:id="@+id/capture_scan_line"
@@ -81,36 +81,40 @@
         android:layout_width="match_parent"
         android:layout_height="85.0dip"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
         android:background="#00000000"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:weightSum="1.0" >
+        android:weightSum="2.0">
+
+
+        <Button
+            android:id="@+id/capture_shuru"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableTop="@drawable/scan_photo"
+            android:gravity="center"
+            android:text="手动输入UID"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
 
         <ToggleButton
             android:id="@+id/capture_flashlight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0"
+            android:layout_weight="1"
             android:background="@null"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/scan_flashlight"
             android:gravity="center"
-            android:textOn="关灯"
-            android:textOff="开灯"
-            android:textSize="11sp"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/capture_scan_photo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:background="@null"
-            android:drawableTop="@drawable/scan_photo"
-            android:gravity="center"
-            android:text="相册"
-            android:textSize="11sp"
             android:textColor="@android:color/white"
-            android:visibility="gone"/>
+            android:textOff="开灯"
+            android:textOn="关灯"
+            android:textSize="12sp" />
+
+
     </LinearLayout>
 
 </RelativeLayout>

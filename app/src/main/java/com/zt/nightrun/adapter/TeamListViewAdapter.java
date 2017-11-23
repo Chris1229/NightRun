@@ -1,6 +1,7 @@
 package com.zt.nightrun.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chris.common.image.ImageUtils;
 import com.zt.nightrun.R;
+import com.zt.nightrun.model.resp.GroupVos;
+
+import java.util.List;
 
 /**
  * 作者：by chris
@@ -19,14 +24,16 @@ import com.zt.nightrun.R;
 public class TeamListViewAdapter extends BaseAdapter{
 
     private Context mContext;
+    private List<GroupVos> lists;
 
-    public TeamListViewAdapter(Context mContext) {
+    public TeamListViewAdapter(Context mContext,List<GroupVos> list) {
         this.mContext = mContext;
+        this.lists =list;
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return lists.size();
     }
 
     @Override
@@ -57,7 +64,11 @@ public class TeamListViewAdapter extends BaseAdapter{
             viewHolder =(ViewHolder)convertView.getTag();
         }
 
-        if(position ==2){
+        final GroupVos groupVos =lists.get(position);
+
+        viewHolder.teamName.setText(groupVos.getGroup().getName());
+        viewHolder.teamLeader.setText("队长"+ groupVos.getUser().getNick());
+        if(groupVos.getGroup().getStatus() ==1){
             viewHolder.teamStatus.setText("已激活");
             viewHolder.teamStatus.setTextColor(mContext.getResources().getColor(R.color.color_1EA557));
             viewHolder.teamStatus.setBackgroundResource(R.mipmap.yijihuo);
@@ -67,6 +78,12 @@ public class TeamListViewAdapter extends BaseAdapter{
             viewHolder.teamStatus.setBackgroundResource(R.mipmap.jihuo);
         }
 
+        viewHolder.teamNumAndDate.setText(groupVos.getGroup().getCreateTime());
+        if(!TextUtils.isEmpty(groupVos.getGroup().getImage())){
+            ImageUtils.loadCircleImage(mContext,groupVos.getGroup().getImage(),R.mipmap.default_avtar,viewHolder.teamImg);
+        }else{
+            viewHolder.teamImg.setImageResource(R.mipmap.default_avtar);
+        }
         return convertView;
     }
 

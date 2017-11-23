@@ -12,13 +12,13 @@ import android.util.Log;
 
 import com.chris.common.R;
 import com.chris.common.utils.ToastUtils;
-import com.chris.common.view.CustomDialog;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import java.util.List;
 import java.util.Map;
@@ -47,13 +47,18 @@ public class ShareUtils {
 
     public void share(ShareModel model, IShareCallback shareCallback) {
         this.shareCallback = shareCallback;
-        new ShareAction(c).setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
-                .withTitle(model.getTitle())
-                .withText(model.getContent())
-                .withTargetUrl(model.getShareUrl())
-                .withMedia(model.getImageMedia())
-                .setCallback(umShareListener)
-                .open();
+        UMWeb web = new UMWeb(model.getShareUrl());
+        web.setTitle(model.getTitle());
+        web.setThumb(new UMImage(c,R.mipmap.logo));
+        web.setDescription(model.getContent());
+        new ShareAction(c).setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE).withMedia(web).setCallback(umShareListener).open();
+//        new ShareAction(c).setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+//                .withTitle(model.getTitle())
+//                .withText(model.getContent())
+//                .withTargetUrl(model.getShareUrl())
+//                .withMedia(model.getImageMedia())
+//                .setCallback(umShareListener)
+//                .open();
     }
 
     private void initShareIntent(String type, String content) {
@@ -138,7 +143,8 @@ public class ShareUtils {
         if(SHARE_MEDIA.QQ == platform){
             initShareIntent("com.tencent.mobileqq", shareText);
         }else{
-            new ShareAction(c).setPlatform(platform)
+            new ShareAction(c)
+                    .setPlatform(platform)
                     .withText(shareText)
                     .setCallback(umShareListener)
                     .share();
@@ -153,13 +159,11 @@ public class ShareUtils {
         if(isPureText(model)){
             pureTextShare(platform, model.getContent(), shareCallback);
         }else {
-            new ShareAction(c).setPlatform(platform)
-                    .withTitle(model.getTitle())
-                    .withText(model.getContent())
-                    .withTargetUrl(model.getShareUrl())
-                    .withMedia(model.getImageMedia())
-                    .setCallback(umShareListener)
-                    .share();
+            UMWeb web = new UMWeb(model.getShareUrl());
+            web.setTitle(model.getTitle());
+            web.setThumb(new UMImage(c,R.mipmap.logo));
+            web.setDescription(model.getContent());
+            new ShareAction(c).setPlatform(platform).withMedia(web).setCallback(umShareListener).share();
         }
     }
 
@@ -175,12 +179,11 @@ public class ShareUtils {
                     .setCallback(umShareListener)
                     .share();
         } else {
-            new ShareAction(c).setPlatform(platform)
-                    .withMedia(model.getImageMedia())
-                    .withTitle(model.getTitle())
-                    .withText(model.getContent())
-                    .setCallback(umShareListener)
-                    .share();
+            UMWeb web = new UMWeb(model.getShareUrl());
+            web.setTitle(model.getTitle());
+            web.setThumb(new UMImage(c,R.mipmap.logo));
+            web.setDescription(model.getContent());
+            new ShareAction(c).setPlatform(platform).withMedia(web).setCallback(umShareListener).share();
         }
     }
 
@@ -227,6 +230,11 @@ public class ShareUtils {
     private UMAuthListener umAuthListener = new UMAuthListener() {
 
         @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
             Log.d("zxl", "登陆授权获取成功" + data);
             mShareAPI.getPlatformInfo(c, platform, getInfoListener);
@@ -246,6 +254,11 @@ public class ShareUtils {
     };
 
     private UMAuthListener getInfoListener = new UMAuthListener() {
+
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
@@ -269,6 +282,11 @@ public class ShareUtils {
     };
 
     private UMShareListener umShareListener = new UMShareListener() {
+
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
 
         @Override
         public void onResult(SHARE_MEDIA platform) {

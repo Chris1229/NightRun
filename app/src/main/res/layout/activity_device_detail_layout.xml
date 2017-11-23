@@ -162,6 +162,43 @@
 
            <RelativeLayout
                android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@color/color_white"
+               android:padding="15dp"
+               >
+
+               <TextView
+                   android:id="@+id/connect"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="连接设备"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:gravity="center"
+                   android:background="@mipmap/yijihuo"
+                   android:padding="5dp"
+                   />
+
+               <TextView
+                   android:id="@+id/tvConnectStatus"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:text="未连接"
+                   android:layout_centerVertical="true"/>
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="13dp"
+               android:background="@color/color_F1F1F4"
+               />
+
+           <RelativeLayout
+               android:layout_width="match_parent"
                android:layout_height="45dp"
                android:background="@color/color_white"
                android:paddingLeft="15dp"
@@ -199,12 +236,68 @@
                android:background="@color/color_F1F1F4"
                android:layout_marginLeft="15dp"/>
 
+           <RelativeLayout
+               android:id="@+id/settingDevice"
+               android:layout_width="match_parent"
+               android:layout_height="45dp"
+               android:background="@drawable/layout_selecter_bg"
+               android:paddingLeft="15dp"
+               >
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:text="设置本设备"
+                   android:layout_centerVertical="true"
+                   android:textSize="15sp"
+                   android:textColor="@color/color_35304F"
+                   android:drawableLeft="@mipmap/light"
+                   android:drawablePadding="12dp"
+                   android:gravity="center_vertical"
+                   />
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@mipmap/icon_arrow_right_grey"
+                   android:scaleType="fitXY"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_centerVertical="true"/>
+
+
+           </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/color_F1F1F4">
+
+                <TextView
+                    android:id="@+id/unBindDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="解绑设备"
+                    android:textColor="@color/color_white"
+                    android:background="#f00"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginTop="100dp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    />
+
+            </RelativeLayout>
+
 
            <RelativeLayout
                android:layout_width="match_parent"
                android:layout_height="45dp"
                android:background="@color/color_white"
                android:paddingLeft="15dp"
+               android:visibility="gone"
                >
 
                <TextView
@@ -244,6 +337,7 @@
                android:layout_height="45dp"
                android:background="@color/color_white"
                android:paddingLeft="15dp"
+               android:visibility="gone"
                >
 
                <TextView
@@ -284,6 +378,7 @@
                android:layout_height="45dp"
                android:background="@color/color_white"
                android:paddingLeft="15dp"
+               android:visibility="gone"
                >
 
                <TextView
@@ -324,6 +419,7 @@
                android:layout_height="45dp"
                android:background="@color/color_white"
                android:paddingLeft="15dp"
+               android:visibility="gone"
                >
 
                <TextView

@@ -55,11 +55,14 @@ import com.quncao.core.http.AbsHttpRequestProxy;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
 import com.chris.common.view.CustomDialog;
+import com.zt.nightrun.activity.EnterUIDActivity;
 import com.zt.nightrun.activity.LoginActivity;
 import com.zt.nightrun.activity.MainActivity;
 import com.zt.nightrun.model.req.ReqActiveDevice;
+import com.zt.nightrun.model.req.ReqAddGroup;
 import com.zt.nightrun.model.req.ReqLogin;
 import com.zt.nightrun.model.resp.RespActiveDevice;
+import com.zt.nightrun.model.resp.RespAddGroup;
 import com.zt.nightrun.model.resp.RespLogin;
 import com.zt.nightrun.model.resp.User;
 import com.zt.nightrun.view.CustomEditDialog;
@@ -108,6 +111,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     private Rect mCropRect = null;
 
     private boolean isFlashlightOpen;
+    private String uid;
 
     /**
      * 图片的路径
@@ -202,7 +206,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         scanLine.startAnimation(animation);
 
         findViewById(R.id.capture_flashlight).setOnClickListener(this);
-        findViewById(R.id.capture_scan_photo).setOnClickListener(this);
+        findViewById(R.id.capture_shuru).setOnClickListener(this);
     }
 
     @Override
@@ -298,59 +302,55 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         inactivityTimer.onActivity();
         beepManager.playBeepSoundAndVibrate();
 
-        String resultString = rawResult.getText();
-
+//        String resultString = rawResult.getText();
+        String resultString = "http://qrcode.ueye.cc?type=group&groupCode=CA3F0C3877CE2F6F96B25D3D9A081FB7&key=8D3704C40497799EBE05603C718395B9";
+//        http://qrcode.ueye.cc?type=group&groupCode=CA3F0C3877CE2F6F96B25D3D9A081FB7&key=8D3704C40497799EBE05603C718395B9
         Log.i("info=====----",resultString.toString());
 
         if(!TextUtils.isEmpty(resultString)){
 
-            CustomEditDialog dialog = new CustomEditDialog(this, "设备uid", "输入一个设备uid", InputType.TYPE_CLASS_NUMBER, new CustomEditDialog.OnOkListener() {
-                @Override
-                public void onOkClick(CustomEditDialog dialog, String string) {
+            if(resultString.contains("http")){
+                String [] resultStr =resultString.split("&");
+                String [] arrStr1 =resultStr[1].split("=");
+                String [] arrStr2 =resultStr[2].split("=");
+                final String uid;
+                String groupCode;
+                final String key = arrStr2[1];
+                Log.i("info=====----",resultStr[0]);
+                if(resultStr[0].contains("device")){
+                    //加设备
+                    uid =arrStr1[1];
+                    CustomEditDialog dialog = new CustomEditDialog(this, "设备昵称", "请为设备设置一个昵称", InputType.TYPE_CLASS_TEXT, new CustomEditDialog.OnOkListener() {
+                        @Override
+                        public void onOkClick(CustomEditDialog dialog, String string) {
 
-                    if(!TextUtils.isEmpty(string)){
-                        dialog.dismiss();
-                        showLoadingDialog();
-                        reqActiveDevice(string);
-                    }else{
-                        ToastUtils.show(CaptureActivity.this,"请输入设备uid");
-                    }
+                            if(!TextUtils.isEmpty(string)){
+                                dialog.dismiss();
+                                showLoadingDialog();
+                                reqActiveDevice(uid,key,string);
+                            }else{
+                                ToastUtils.show(CaptureActivity.this,"请输入设备昵称");
+                            }
+                        }
+                    });
+
+                    dialog.show();
+
+                }else{
+                    //加组队
+                    groupCode =arrStr1[1];
+
+                    reqAddGroup(groupCode,key);
                 }
-            });
 
-            dialog.show();
+            }else{
+
+                ToastUtils.show(this,"不是该程序识别的二维码");
+            }
 
         }else{
-            ToastUtils.show(this, "扫码失败");
+            ToastUtils.show(this, "扫码失败,不是该程序识别的二维码");
         }
-
-//        if (resultString.equals("")) {
-//            ToastUtils.show(this, "扫码失败");
-//        } else if (resultString.contains("http://") || resultString.startsWith("https://")) {
-//            if (resultString.contains("source=bailingniaoqrcode")) {
-//                Map<String, String> hashMap = new HashMap<>();
-//                String[] params = resultString.split("&");
-//                for (String str : params) {
-//                    String[] sp = str.split("=");
-//                    hashMap.put(sp[0], sp[1]);
-//                }
-//                if (hashMap.get("m").equals("c")) {
-////                    ClubModuleApi.getInstance().startClubIndex(this, Integer.parseInt(hashMap.get("d")), 0);
-//                    finish();
-//                } else if (hashMap.get("m").equals("u")) {
-////                    AppEntry.enterUserhomeActivity(this, Integer.parseInt(hashMap.get("d")));
-//                    finish();
-//                } else {
-//                    Uri uri = Uri.parse(resultString);
-//                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                    startActivity(intent);
-//                }
-//            } else {
-//                Uri uri = Uri.parse(resultString);
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                startActivity(intent);
-//            }
-//        }
 
     }
 
@@ -502,8 +502,25 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     @Override
     public void onClick(View v) {
         final int id = v.getId();
-        if (id == R.id.capture_scan_photo) {// 打开手机中的相册
+        if (id == R.id.capture_shuru) {// 打开手机中的相册
+            startActivity(new Intent(this, EnterUIDActivity.class));
+            finish();
 //            startActivityForResult(new Intent(this, GalleryProxy.getGalleryClass()).putExtra("maxNum", 1), REQUEST_CODE);
+//            CustomEditDialog dialog = new CustomEditDialog(this, "UID", "请输入一个设备UID", InputType.TYPE_CLASS_TEXT, new CustomEditDialog.OnOkListener() {
+//                @Override
+//                public void onOkClick(CustomEditDialog dialog, String string) {
+//
+//                    if(!TextUtils.isEmpty(string)){
+//                        dialog.dismiss();
+//                        uid =string;
+//                        showShuruNickDialog(uid);
+//                    }else{
+//                        ToastUtils.show(CaptureActivity.this,"请输入设备昵称");
+//                    }
+//                }
+//            });
+//
+//            dialog.show();
         } else if (id == R.id.capture_flashlight) {
             if (isFlashlightOpen) {
                 cameraManager.setTorch(false); // 关闭闪光灯
@@ -512,14 +529,37 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
                 cameraManager.setTorch(true); // 打开闪光灯
                 isFlashlightOpen = true;
             }
-
         }
     }
 
-    private void reqActiveDevice(String uid){
+
+    private void showShuruNickDialog(final String uid){
+        CustomEditDialog dialog = new CustomEditDialog(this, "设备昵称", "请为设备设置一个昵称", InputType.TYPE_CLASS_TEXT, new CustomEditDialog.OnOkListener() {
+            @Override
+            public void onOkClick(CustomEditDialog dialog, String string) {
+
+                if(!TextUtils.isEmpty(string)){
+                    dialog.dismiss();
+                    showLoadingDialog();
+                    reqActiveDevice(uid,"",string);
+                }else{
+                    ToastUtils.show(CaptureActivity.this,"请输入设备昵称");
+                }
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    private void reqActiveDevice(String uid,String key,String name){
         final ReqActiveDevice reqActiveDevice = new ReqActiveDevice();
 
         reqActiveDevice.setUid(uid);
+        if(!TextUtils.isEmpty(key)){
+            reqActiveDevice.setQrcode(key);
+        }
+        reqActiveDevice.setName(name);
         reqActiveDevice.setIsActive(1);
         HttpRequestProxy.get().create(reqActiveDevice, new AbsHttpRequestProxy.RequestListener() {
             @Override
@@ -528,7 +568,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
                 Log.i("info",response.toString());
                 RespActiveDevice respActiveDevice =(RespActiveDevice) response;
                 dismissLoadingDialog();
-                if(respActiveDevice.getData().getResultCode()==0){
+                if(respActiveDevice.getCode()==0){
 
                     ToastUtils.show(CaptureActivity.this,"设备绑定成功");
 
@@ -543,6 +583,39 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
                 dismissLoadingDialog();
                 Log.i("info",error.toString());
                 ToastUtils.show(CaptureActivity.this,error.toString());
+            }
+        }).tag(this.toString()).build().excute();
+
+    }
+
+    private void reqAddGroup(String groupCode,String key){
+        final ReqAddGroup reqAddGroup = new ReqAddGroup();
+
+        reqAddGroup.setGroupCode(groupCode);
+        reqAddGroup.setQrcode(key);
+        HttpRequestProxy.get().create(reqAddGroup, new AbsHttpRequestProxy.RequestListener() {
+            @Override
+            public void onSuccess(Object response) {
+
+                Log.i("info",response.toString());
+                RespAddGroup respAddGroup =(RespAddGroup) response;
+                dismissLoadingDialog();
+                if(respAddGroup.getCode()==0){
+
+                    ToastUtils.show(CaptureActivity.this,"加入组队成功");
+
+                }else{
+                    ToastUtils.show(CaptureActivity.this,"加入组队失败");
+                }
+                finish();
+            }
+
+            @Override
+            public void onFailed(VolleyError error) {
+                dismissLoadingDialog();
+                Log.i("info",error.toString());
+                ToastUtils.show(CaptureActivity.this,error.toString());
+                finish();
             }
         }).tag(this.toString()).build().excute();
 

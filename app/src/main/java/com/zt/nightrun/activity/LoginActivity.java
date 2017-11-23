@@ -13,12 +13,15 @@ import android.widget.TextView;
 import com.android.volley.error.VolleyError;
 import com.chris.common.KeelApplication;
 import com.chris.common.network.HttpRequestProxy;
+import com.chris.common.share.ILoginCallback;
+import com.chris.common.share.ShareUtils;
 import com.chris.common.utils.Md5Utils;
 import com.chris.common.utils.SharedPreferencesUtil;
 import com.chris.common.utils.ToastUtils;
 import com.chris.common.view.BaseActivity;
 import com.quncao.core.http.AbsHttpRequestProxy;
-import com.tencent.mm.sdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
 import com.zt.nightrun.model.req.ReqLogin;
@@ -26,6 +29,7 @@ import com.zt.nightrun.model.resp.RespLogin;
 import com.zt.nightrun.model.resp.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 作者：by chris
@@ -39,6 +43,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private TextView tvEnsureLogin;
     private TextView tvRegister,tvFindPassword;
     private TextView tvWeixin;
+    private ShareUtils shareUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,9 +110,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     return;
                 }
                 final SendAuth.Req req = new SendAuth.Req();
-                req.scope = "snsapi_userinfo";
-                req.state = "diandi_wx_login";
-                NightRunApplication.getWxApi().sendReq(req);
+                getShareUtils().login(SHARE_MEDIA.WEIXIN, new ILoginCallback() {
+                    @Override
+                    public void onSuccess(Map<String, String> data) {
+                        Log.i("info=====++++", data.toString());
+                        String openid = data.get("openid");
+                        String thirdNickname = data.get("screen_name");
+                        String thirdIcon = data.get("profile_image_url");
+                        String gender = data.get("gender");
+                        if (gender != null) {
+                           int thirdGender = Integer.parseInt(gender);
+                        }
+                        String wechatUnionid = data.get("unionid");
+                    }
+
+                    @Override
+                    public void onFailed(String msg) {
+                        ToastUtils.show(LoginActivity.this, "授权失败，请重试");
+                        dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        ToastUtils.show(LoginActivity.this, "已取消授权");
+                        dismissLoadingDialog();
+                    }
+                });
                 break;
         }
     }
@@ -165,4 +193,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             }
         }).tag(this.toString()).build().excute();
     }
+
+    private ShareUtils getShareUtils() {
+        if (shareUtils == null) {
+            shareUtils = new ShareUtils(this);
+        }
+        return shareUtils;
+    }
+
 }

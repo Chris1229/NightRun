@@ -36,7 +36,7 @@
             android:id="@+id/personInfoId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -69,7 +69,7 @@
             android:id="@+id/tuijianId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -107,7 +107,7 @@
             android:id="@+id/bangdingweixinId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -145,7 +145,7 @@
             android:id="@+id/revisepasswordId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -183,7 +183,7 @@
             android:id="@+id/refundId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -221,7 +221,7 @@
             android:id="@+id/helpId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 
@@ -259,7 +259,7 @@
             android:id="@+id/aboutId"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/color_white"
+            android:background="@drawable/layout_selecter_bg"
             android:paddingLeft="15dp"
             >
 

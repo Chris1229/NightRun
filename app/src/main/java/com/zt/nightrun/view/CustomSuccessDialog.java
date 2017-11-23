@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chris.common.KeelApplication;
+import com.google.zxing.WriterException;
 import com.zt.nightrun.R;
+import com.zt.nightrun.zxing.activity.CreateERCard;
 
 /**
  * 作者：by chris
@@ -26,6 +28,7 @@ public class CustomSuccessDialog extends Dialog {
     private TextView tvLeft;
     private TextView tvRight;
     private ImageView codeImg;
+    private String qvcode;
 
     private Context context;
     private String title = "创建成功";
@@ -36,9 +39,10 @@ public class CustomSuccessDialog extends Dialog {
     private String rightColor = "#675BAE";
     private View view;
 
-    public CustomSuccessDialog(Context context, String content,OnClickListener onClickListener) {
+    public CustomSuccessDialog(Context context, String content,String qvcode,OnClickListener onClickListener) {
         super(context, R.style.dialog);
         this.context = context;
+        this.qvcode =qvcode;
         this.content =content;
         this.clickListener = onClickListener;
     }
@@ -76,6 +80,12 @@ public class CustomSuccessDialog extends Dialog {
                 clickListener.onLeftClick(CustomSuccessDialog.this);
             }
         });
+
+        try {
+            codeImg.setImageBitmap(CreateERCard.createQRCode(qvcode,200));
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     public interface OnClickListener {

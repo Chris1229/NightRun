@@ -22,6 +22,7 @@
         android:textColorHint="#999"
         android:background="#fff"
         android:paddingLeft="16dp"
+        android:maxLength="8"
         />
 
 </LinearLayout>

@@ -22,6 +22,8 @@ import com.chris.common.view.BaseActivity;
 import com.quncao.core.http.AbsHttpRequestProxy;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
+import com.zt.nightrun.eventbus.TeamName;
+import com.zt.nightrun.eventbus.UserImg;
 import com.zt.nightrun.fragment.DeviceFragment;
 import com.zt.nightrun.fragment.FindFragment;
 import com.zt.nightrun.fragment.MallFragment;
@@ -32,6 +34,10 @@ import com.zt.nightrun.model.req.ReqDeviceList;
 import com.zt.nightrun.model.resp.RespActiveDevice;
 import com.zt.nightrun.model.resp.RespDeviceList;
 import com.zt.nightrun.zxing.activity.CaptureActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener{
     private long exitTime = 0;
@@ -56,6 +62,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
         initUI();
 
+        EventBus.getDefault().register(this);
+
     }
 
     private void initUI(){
@@ -75,7 +83,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             tvNick.setText(NightRunApplication.getInstance().nick);
         }
 
-        ImageUtils.loadCircleImage(this,"http://img.qq1234.org/uploads/allimg/141010/3_141010111902_4.png",R.mipmap.default_avtar,headImg);
+        ImageUtils.loadCircleImage(this,NightRunApplication.getInstance().image,R.mipmap.default_avtar,headImg);
     }
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -192,6 +200,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             NightRunApplication.getInstance().finishAllActivity();
             NightRunApplication.getInstance().AppExit();
         }
+
+        EventBus.getDefault().unregister(this);
     }
 
+    //修改完昵称后刷新
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(UserImg userImg) {
+
+        ImageUtils.loadCircleImage(this,userImg.getImage(),R.mipmap.default_avtar,headImg);
+    }
 }
