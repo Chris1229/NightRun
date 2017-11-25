@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             tvNick.setText(NightRunApplication.getInstance().nick);
         }
 
-        ImageUtils.loadCircleImage(this,NightRunApplication.getInstance().image,R.mipmap.default_avtar,headImg);
+        ImageUtils.loadCircleImage(this,NightRunApplication.getInstance().image+"!thumb",R.mipmap.default_avtar,headImg);
     }
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -208,6 +208,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(UserImg userImg) {
 
-        ImageUtils.loadCircleImage(this,userImg.getImage(),R.mipmap.default_avtar,headImg);
+        ImageUtils.loadCircleImage(this,userImg.getImage()+"!thumb",R.mipmap.default_avtar,headImg);
+        if(!TextUtils.isEmpty(NightRunApplication.getInstance().nick)){
+            tvNick.setText(NightRunApplication.getInstance().nick);
+        }
     }
 }

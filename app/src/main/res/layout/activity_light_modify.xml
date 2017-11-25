@@ -76,8 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/small_2"
-                    android:button="@null"
-                    android:visibility="gone"/>
+                    android:button="@null" />
 
                 <RadioButton
                     android:id="@+id/radioBt3"

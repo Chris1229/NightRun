@@ -19,7 +19,7 @@ public class RGBUtils {
     public static final int LIGHT_COLOR_9[] ={243,46,243};
 
     public static final int LIGHT_MOVE_NO =0;
-    public static final int LIGHT_MOVE_SLOW =1;
-    public static final int LIGHT_MOVE_FAST =2;
+    public static final int LIGHT_MOVE_SLOW =2;
+    public static final int LIGHT_MOVE_FAST =1;
 
 }

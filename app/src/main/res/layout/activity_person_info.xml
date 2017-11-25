@@ -6,6 +6,34 @@
     android:background="@color/color_F1F1F4">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/value_40dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:background="#fff"
+        android:layout_marginTop="@dimen/value_10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号："
+            android:textColor="#333"
+            android:textSize="@dimen/value_15sp"/>
+
+
+        <TextView
+            android:id="@+id/userId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#666"
+            android:layout_marginLeft="@dimen/value_10dp"
+            android:textSize="@dimen/value_15sp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/layout_user_icon"
         android:layout_width="fill_parent"
         android:layout_height="60dip"

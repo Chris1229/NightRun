@@ -80,7 +80,7 @@ public class TeamListViewAdapter extends BaseAdapter{
 
         viewHolder.teamNumAndDate.setText(groupVos.getGroup().getCreateTime());
         if(!TextUtils.isEmpty(groupVos.getGroup().getImage())){
-            ImageUtils.loadCircleImage(mContext,groupVos.getGroup().getImage(),R.mipmap.default_avtar,viewHolder.teamImg);
+            ImageUtils.loadCircleImage(mContext,groupVos.getGroup().getImage()+"!thumb",R.mipmap.default_avtar,viewHolder.teamImg);
         }else{
             viewHolder.teamImg.setImageResource(R.mipmap.default_avtar);
         }

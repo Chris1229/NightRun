@@ -46,6 +46,11 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_findpassword);
 
         initUI();
+
+        if(!TextUtils.isEmpty(NightRunApplication.getInstance().mobile)){
+            etPhoneNum.setText(NightRunApplication.getInstance().mobile);
+            etPhoneNum.setSelection(etPhoneNum.getText().length());
+        }
     }
 
     private void initUI() {

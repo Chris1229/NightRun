@@ -105,7 +105,7 @@ public class ModifyTeamInfoActivity extends BaseActivity implements View.OnClick
         teamNameLinear.setOnClickListener(this);
 
         if(!TextUtils.isEmpty(teamImg)){
-            ImageUtils.loadCircleImage(this, teamImg,R.mipmap.default_avtar,img_avatar);
+            ImageUtils.loadCircleImage(this, teamImg+"!thumb",R.mipmap.default_avtar,img_avatar);
         }
 
         tvTeamName.setText(teamNick);
@@ -122,6 +122,7 @@ public class ModifyTeamInfoActivity extends BaseActivity implements View.OnClick
                 Intent intent = new Intent(this,ModifyNickNameActivity.class);
                 intent.putExtra("type",1);
                 intent.putExtra("groupId",groupId);
+                intent.putExtra("teamNick",teamNick);
                 startActivity(intent);
                 break;
 
@@ -470,7 +471,7 @@ public class ModifyTeamInfoActivity extends BaseActivity implements View.OnClick
                     ToastUtils.show(ModifyTeamInfoActivity.this, "组队logo修改成功");
                     Group group = respModify.getData().getGroup();
                     teamImg =group.getImage();
-                    ImageUtils.loadCircleImage(ModifyTeamInfoActivity.this,group.getImage(),R.mipmap.default_avtar,img_avatar);
+                    ImageUtils.loadCircleImage(ModifyTeamInfoActivity.this,group.getImage()+"!thumb",R.mipmap.default_avtar,img_avatar);
                 } else {
                     ToastUtils.show(ModifyTeamInfoActivity.this, respModify.getMessage());
                 }

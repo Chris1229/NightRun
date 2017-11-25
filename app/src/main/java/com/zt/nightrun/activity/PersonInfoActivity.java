@@ -83,6 +83,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
     private TextView tvSex;
     private ImageView img_avatar;
     private CActionSheetDialog shareDialog;
+    private TextView tvAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         tvNick = (TextView) findViewById(R.id.tv_nick_name);
         tvSex = (TextView) findViewById(R.id.tv_sex);
         img_avatar =(ImageView)findViewById(R.id.img_avatar);
+        tvAccount =(TextView)findViewById(R.id.userId);
         headLinear.setOnClickListener(this);
         nickNameLinear.setOnClickListener(this);
         sexLayout.setOnClickListener(this);
@@ -114,7 +116,11 @@ public class PersonInfoActivity extends BaseActivity implements View.OnClickList
         }
         if(!TextUtils.isEmpty(NightRunApplication.getInstance().image)){
             Log.i("info=====-",NightRunApplication.getInstance().image);
-            ImageUtils.loadCircleImage(this,NightRunApplication.getInstance().image,R.mipmap.default_avtar,img_avatar);
+            ImageUtils.loadCircleImage(this,NightRunApplication.getInstance().image+"!thumb",R.mipmap.default_avtar,img_avatar);
+        }
+
+        if(!TextUtils.isEmpty(NightRunApplication.getInstance().mobile)){
+            tvAccount.setText(NightRunApplication.getInstance().mobile);
         }
     }
 

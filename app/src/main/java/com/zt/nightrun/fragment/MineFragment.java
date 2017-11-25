@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chris.common.share.ILoginCallback;
 import com.chris.common.share.IShareCallback;
@@ -22,9 +23,11 @@ import com.chris.common.view.ActionItem;
 import com.chris.common.view.BaseFragment;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
 import com.zt.nightrun.activity.EnterUIDActivity;
 import com.zt.nightrun.activity.FindPassWordActivity;
+import com.zt.nightrun.activity.LoginActivity;
 import com.zt.nightrun.activity.PersonInfoActivity;
 import com.zt.nightrun.view.CustomEditDialog;
 
@@ -40,6 +43,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
 
     private RelativeLayout mPersonInfoLayout, mTuiJianLayout,mWeixinLayout,mRevisePassWordLayout,mRefundLayout,mHelpLayout,mAboutLayout;
     private ShareUtils shareUtils;
+    private TextView tvLoginOut;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
         mRefundLayout =(RelativeLayout)view.findViewById(R.id.refundId);
         mHelpLayout =(RelativeLayout)view.findViewById(R.id.helpId);
         mAboutLayout =(RelativeLayout)view.findViewById(R.id.aboutId);
+        tvLoginOut =(TextView)view.findViewById(R.id.loginOutId);
         mPersonInfoLayout.setOnClickListener(this);
         mTuiJianLayout.setOnClickListener(this);
         mWeixinLayout.setOnClickListener(this);
@@ -67,7 +72,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
         mRefundLayout.setOnClickListener(this);
         mHelpLayout.setOnClickListener(this);
         mAboutLayout.setOnClickListener(this);
-
+        tvLoginOut.setOnClickListener(this);
         return view;
 
     }
@@ -177,6 +182,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener{
 //                });
 //
 //                dialog.show();
+                break;
+
+            case R.id.loginOutId:
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                NightRunApplication.getInstance().finishAllActivity();
+                SharedPreferencesUtil.saveInteger(getActivity(),"userId",-1);
                 break;
 
         }

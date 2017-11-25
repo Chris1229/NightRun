@@ -21,7 +21,7 @@
             android:layout_marginLeft="7dp"
             android:textSize="15sp"
             android:textColor="#fff"
-            android:text="敏敏"
+            android:text=""
             android:gravity="center"
             />
 
@@ -126,7 +126,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:text="报警"
+                    android:text=""
                     android:textColor="@color/color_DE5454"
                     android:textSize="15sp"
                     android:gravity="center"/>

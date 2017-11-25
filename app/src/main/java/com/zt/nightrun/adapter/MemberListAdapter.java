@@ -103,7 +103,7 @@ public class MemberListAdapter extends BaseAdapter{
 //        viewHolder.teamStatus.setBackgroundResource(R.mipmap.jihuo);
 
         if(!TextUtils.isEmpty(groupUser.getUser().getImage())){
-            ImageUtils.loadCircleImage(mContext,groupUser.getUser().getImage(),R.mipmap.default_avtar,viewHolder.teamImg);
+            ImageUtils.loadCircleImage(mContext,groupUser.getUser().getImage()+"!thumb",R.mipmap.default_avtar,viewHolder.teamImg);
         }
         viewHolder.teamName.setText(groupUser.getUser().getNick());
         viewHolder.teamNumAndDate.setText(groupUser.getDevice().getLastTime());
@@ -128,7 +128,7 @@ public class MemberListAdapter extends BaseAdapter{
                     GroupUser groupUser =lists.get(position);
                     groupUser.setBlnCheckIn(true);
                     notifyDataSetChanged();
-
+                    ToastUtils.show(mContext,"签到成功");
                 }else{
                     ToastUtils.show(mContext,"签到失败");
                 }

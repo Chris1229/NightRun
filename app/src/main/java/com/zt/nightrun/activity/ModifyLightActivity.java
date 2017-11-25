@@ -13,6 +13,7 @@ import com.chris.common.network.HttpRequestProxy;
 import com.chris.common.utils.ToastUtils;
 import com.chris.common.view.BaseActivity;
 import com.quncao.core.http.AbsHttpRequestProxy;
+import com.zt.nightrun.blue.utils.BlueUtils;
 import com.zt.nightrun.model.req.ReqModifyColor;
 import com.zt.nightrun.model.resp.RespModifyColor;
 import com.zt.nightrun.utils.RGBUtils;
@@ -51,8 +52,16 @@ public class ModifyLightActivity extends BaseActivity  implements RadioGroup.OnC
         setRightTv("提交").setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(rgbB >=0 && lightDodge >=0){
-                    reqModiftyLight();
+                if(rgbB>=0){
+                    if(rgbB !=100 && rgbB !=101){
+                        if(lightDodge >=0){
+                            reqModiftyLight();
+                        }else{
+                            ToastUtils.show(ModifyLightActivity.this,"请先选择频闪");
+                        }
+                    }else{
+                        reqModiftyLight();
+                    }
                 }else{
                     ToastUtils.show(ModifyLightActivity.this,"请先选择颜色");
                 }
@@ -73,15 +82,17 @@ public class ModifyLightActivity extends BaseActivity  implements RadioGroup.OnC
             //颜色
             case R.id.radioBt1:
                 selectImg.setImageResource(R.mipmap.big_1);
-                rgbR =RGBUtils.LIGHT_COLOR_1[0];
-                rgbG =RGBUtils.LIGHT_COLOR_1[1];
-                rgbB =RGBUtils.LIGHT_COLOR_1[2];
+                rgbR =100;
+                rgbG =100;
+                rgbB =100;
                 break;
 
-//            case R.id.radioBt2:
-//                selectImg.setImageResource(R.mipmap.big_2);
-//                lightColor =BlueUtils.BLUE_LIGHT_COLOR_2;
-//                break;
+            case R.id.radioBt2:
+                selectImg.setImageResource(R.mipmap.big_2);
+                rgbR =101;
+                rgbG =101;
+                rgbB =101;
+                break;
 
             case R.id.radioBt3:
                 selectImg.setImageResource(R.mipmap.big_3);
@@ -162,8 +173,14 @@ public class ModifyLightActivity extends BaseActivity  implements RadioGroup.OnC
         reqModifyColor.setColorB(rgbB);
         reqModifyColor.setColorR(rgbR);
         reqModifyColor.setColorG(rgbG);
+        if(rgbB ==100 && rgbR ==100 && rgbG ==100){
+            reqModifyColor.setIsFlash(100);
+        }else if(rgbB ==101 && rgbR ==101 && rgbG ==101){
+            reqModifyColor.setIsFlash(101);
+        }else {
+            reqModifyColor.setIsFlash(lightDodge);
+        }
         reqModifyColor.setGroupId(groupId);
-        reqModifyColor.setIsFlash(lightDodge);
 
         HttpRequestProxy.get().create(reqModifyColor, new AbsHttpRequestProxy.RequestListener() {
             @Override

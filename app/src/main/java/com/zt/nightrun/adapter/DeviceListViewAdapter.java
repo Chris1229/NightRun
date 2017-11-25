@@ -1,6 +1,7 @@
 package com.zt.nightrun.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,14 @@ public class DeviceListViewAdapter extends BaseAdapter{
             viewHolder =(ViewHolder)convertView.getTag();
         }
         final DeviceItem deviceItem =lists.get(position);
-        viewHolder.tvNickName.setText(deviceItem.getUser().getNick());
-        viewHolder.tvDeviceName.setText(deviceItem.getDevice().getName());
+        if(deviceItem.getUser()!=null){
+            if(!TextUtils.isEmpty(deviceItem.getUser().getNick())){
+                viewHolder.tvNickName.setText(deviceItem.getUser().getNick());
+            }
+        }
+        if(!TextUtils.isEmpty(deviceItem.getDevice().getName())){
+            viewHolder.tvDeviceName.setText(deviceItem.getDevice().getName());
+        }
         if(deviceItem.getDevice().getPower()>20){
             viewHolder.powerImg.setImageResource(R.mipmap.battery_normal);
             viewHolder.tvPower.setText(deviceItem.getDevice().getPower()+"%");
@@ -78,19 +85,21 @@ public class DeviceListViewAdapter extends BaseAdapter{
         if(deviceItem.getDevice().getStatus()==0){
             viewHolder.tvStatus.setText("报警");
             viewHolder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_DE5454));
+            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_orange);
         }else{
             viewHolder.tvStatus.setText("在线");
             viewHolder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.color_white));
-        }
-        if(position % 4 ==0){
             viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_blue);
-        }else if (position % 4 ==1){
-            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_orange);
-        }else if (position % 4 ==2){
-            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_pink);
-        }else if(position % 4 ==3) {
-            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_blue_green);
         }
+//        if(position % 4 ==0){
+//            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_blue);
+//        }else if (position % 4 ==1){
+//            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_orange);
+//        }else if (position % 4 ==2){
+//            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_pink);
+//        }else if(position % 4 ==3) {
+//            viewHolder.mItemLinear.setBackgroundResource(R.drawable.device_bg_blue_green);
+//        }
         return convertView;
     }
 

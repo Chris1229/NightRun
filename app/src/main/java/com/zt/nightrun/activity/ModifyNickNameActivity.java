@@ -17,6 +17,7 @@ import com.quncao.core.http.AbsHttpRequestProxy;
 import com.zt.nightrun.NightRunApplication;
 import com.zt.nightrun.R;
 import com.zt.nightrun.eventbus.TeamName;
+import com.zt.nightrun.eventbus.UserImg;
 import com.zt.nightrun.model.req.ReqModify;
 import com.zt.nightrun.model.req.ReqModifyTeamInfo;
 import com.zt.nightrun.model.resp.Group;
@@ -36,6 +37,7 @@ public class ModifyNickNameActivity extends BaseActivity {
     private EditText etNickName;
     private int type;
     private int groupId;
+    private String teamNick;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +47,25 @@ public class ModifyNickNameActivity extends BaseActivity {
         Intent intent =getIntent();
         type =intent.getIntExtra("type",0);
         groupId =intent.getIntExtra("groupId",0);
+        teamNick =intent.getStringExtra("teamNick");
         initView();
     }
 
     private void initView(){
-        if(type ==1){
-            setTitle("编辑组队昵称");
-        }else{
-            setTitle("编辑昵称");
-        }
 
         etNickName =(EditText)findViewById(R.id.etNickName);
 
+        if(type ==1){
+            setTitle("编辑组队昵称");
+            etNickName.setText(teamNick);
+        }else{
+            setTitle("编辑昵称");
+            if(!TextUtils.isEmpty(NightRunApplication.getInstance().nick)){
+                etNickName.setText(NightRunApplication.getInstance().nick);
+            }
+        }
+
+        etNickName.setSelection(etNickName.getText().length());
         setRightTv("保存").setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +101,7 @@ public class ModifyNickNameActivity extends BaseActivity {
                     User user =respModify.getData().getUser();
                     SharedPreferencesUtil.saveString(KeelApplication.getApplicationConext(),"nick",user.getNick());
                     NightRunApplication.getInstance().nick =user.getNick();
-
+                    EventBus.getDefault().post(new UserImg(user.getImage()));
                     finish();
                 }else{
                     ToastUtils.show(ModifyNickNameActivity.this,respModify.getMessage());
