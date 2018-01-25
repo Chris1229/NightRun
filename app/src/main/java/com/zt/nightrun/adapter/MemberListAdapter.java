@@ -106,7 +106,11 @@ public class MemberListAdapter extends BaseAdapter{
             ImageUtils.loadCircleImage(mContext,groupUser.getUser().getImage()+"!thumb",R.mipmap.default_avtar,viewHolder.teamImg);
         }
         viewHolder.teamName.setText(groupUser.getUser().getNick());
-        viewHolder.teamNumAndDate.setText(groupUser.getDevice().getLastTime());
+        if(groupUser.getDevice()!=null){
+            if(!TextUtils.isEmpty(groupUser.getDevice().getLastTime())){
+                viewHolder.teamNumAndDate.setText(groupUser.getDevice().getLastTime());
+            }
+        }
         return convertView;
     }
 

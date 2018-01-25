@@ -55,11 +55,13 @@ public class HttpRequestProxy extends AbsHttpRequestProxy {
         return new HttpRequestProxy.Builder();
     }
 
+    @Override
     protected String getDomain() {
 //        return EAPIConstants.getUserUrl();
         return "http://www.carnote.cn/yxsq/";
     }
 
+    @Override
     protected TreeMap<String, String> getCommonParamMap() {
 //        String version = LarkUtils.getVersion(KeelApplication.getApplicationConext());
         TreeMap commonParam = new TreeMap();

@@ -89,7 +89,7 @@ public class EnterUIDActivity extends BaseActivity {
                     finish();
 
                 }else{
-                    ToastUtils.show(EnterUIDActivity.this,"设备绑定失败");
+                    ToastUtils.show(EnterUIDActivity.this,((RespActiveDevice) response).getMessage());
                 }
             }
 

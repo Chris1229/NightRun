@@ -171,6 +171,7 @@ public class TeamFragment extends BaseFragment implements IXListViewRefreshListe
 
                 Log.i("info",response.toString());
                 final RespCreateGroup respCreateGroup =(RespCreateGroup) response;
+                Log.i("info=====",respCreateGroup.toString());
                 if(respCreateGroup.getCode()==0){
                     dismissLoadingDialog();
                     mXListView.startRefresh();

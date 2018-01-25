@@ -188,7 +188,7 @@ public class LocationActivity extends BaseActivity {
                         initMarker(locations.get(locations.size()-1).getLat(),locations.get(locations.size()-1).getLng());
 
                     }else{
-                        ToastUtils.show(LocationActivity.this,"该设备暂无历史记录");
+                        ToastUtils.show(LocationActivity.this,"暂无法定位到该设备");
                     }
                 }
 
@@ -207,11 +207,11 @@ public class LocationActivity extends BaseActivity {
 
         //定义Maker坐标点
 //        LatLng point = new LatLng(lat, lng);
-//        LatLng point = new LatLng(116.421028, 39.928832);
-        LatLng point = new LatLng(39.928832,116.421028);
+        LatLng point = new LatLng(lng, lat);
+//        LatLng point = new LatLng(39.928832,116.421028);
         //构建Marker图标
         BitmapDescriptor bitmap = BitmapDescriptorFactory
-                .fromResource(R.mipmap.map_icon_pin);
+                .fromResource(R.mipmap.viewlib_ic_weight_fat);
         //构建MarkerOption，用于在地图上添加Marker
         OverlayOptions option = new MarkerOptions()
                 .position(point)

@@ -50,8 +50,9 @@ public class BluetoothController {
 	}
 
 	public static BluetoothController getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new BluetoothController();
+		}
 		return instance;
 	}
 
@@ -73,10 +74,11 @@ public class BluetoothController {
 				.getSystemService(Context.BLUETOOTH_SERVICE);
 		bleAdapter = bluetoothManager.getAdapter();
 		// 检查设备上是否支持蓝牙
-		if (bleAdapter == null)
+		if (bleAdapter == null) {
 			return false;
-		else
+		} else {
 			return true;
+		}
 	}
 
 	/**
@@ -97,8 +99,9 @@ public class BluetoothController {
 		public void onLeScan(BluetoothDevice device, int arg1, byte[] arg2) {
 			// device就是搜索到的设备
 			String name = device.getName();
-			if (name == null)
+			if (name == null) {
 				return;
+			}
 			if (BluetoothController.this.serviceHandler != null
 					&& !name.isEmpty()) {
 				Message msg = new Message();
@@ -115,9 +118,10 @@ public class BluetoothController {
 //	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 	public void startScanBLE() {
 		bleAdapter.startLeScan(bleScanCallback);
-		if (serviceHandler != null)
+		if (serviceHandler != null) {
 			serviceHandler.sendEmptyMessageDelayed(
 					ConstantUtils.WM_STOP_SCAN_BLE, 5000);
+		}
 	}
 
 	/**
@@ -174,6 +178,7 @@ public class BluetoothController {
 		/**
 		 * 收到消息
 		 */
+		@Override
 		public void onCharacteristicChanged(BluetoothGatt paramAnonymousBluetoothGatt, BluetoothGattCharacteristic paramAnonymousBluetoothGattCharacteristic) {
 
 			byte[] arrayOfByte = paramAnonymousBluetoothGattCharacteristic
@@ -191,11 +196,13 @@ public class BluetoothController {
 					ConvertUtils.getInstance().bytesToHexString(arrayOfByte));
 		}
 
+		@Override
 		public void onCharacteristicRead(BluetoothGatt paramAnonymousBluetoothGatt, BluetoothGattCharacteristic paramAnonymousBluetoothGattCharacteristic, int paramAnonymousInt) {
 
 		}
 
 		//当向Characteristic写数据时会回调该函数
+		@Override
 		public void onCharacteristicWrite(BluetoothGatt paramAnonymousBluetoothGatt, BluetoothGattCharacteristic paramAnonymousBluetoothGattCharacteristic, int status) {
 			System.out.println("--------write success----- status:" + status);
 
@@ -204,6 +211,7 @@ public class BluetoothController {
 		/**
 		 * 连接状态改变
 		 */
+		@Override
 		public void onConnectionStateChange(
                 BluetoothGatt paramAnonymousBluetoothGatt, int oldStatus,
                 int newStatus) {
@@ -230,27 +238,32 @@ public class BluetoothController {
 			return;
 		}
 
+		@Override
 		public void onDescriptorRead(BluetoothGatt paramAnonymousBluetoothGatt,
 									 BluetoothGattDescriptor paramAnonymousBluetoothGattDescriptor,
 									 int paramAnonymousInt) {
 		}
 
 		//当向设备Descriptor中写数据时，会回调该函数
+		@Override
 		public void onDescriptorWrite(BluetoothGatt paramAnonymousBluetoothGatt, BluetoothGattDescriptor descriptor, int status) {
 
 			System.out.println("onDescriptorWriteonDescriptorWrite = " + status + ", descriptor =" + descriptor.getUuid().toString());
 
 		}
 
+		@Override
 		public void onReadRemoteRssi(BluetoothGatt paramAnonymousBluetoothGatt, int rssi, int status) {
 			System.out.println("rssi = " + rssi);
 
 		}
 
+		@Override
 		public void onReliableWriteCompleted(
                 BluetoothGatt paramAnonymousBluetoothGatt, int paramAnonymousInt) {
 		}
 
+		@Override
 		public void onServicesDiscovered(BluetoothGatt gatt, int status) {
 			BluetoothController.this.findService(gatt.getServices());
 		}
@@ -264,10 +277,12 @@ public class BluetoothController {
 	 * @return
 	 */
 	public boolean write(byte byteArray[]) {
-		if (bleGattCharacteristic == null)
+		if (bleGattCharacteristic == null) {
 			return false;
-		if (bleGatt == null)
+		}
+		if (bleGatt == null) {
 			return false;
+		}
 		bleGattCharacteristic.setValue(byteArray);
 		return bleGatt.writeCharacteristic(bleGattCharacteristic);
 	}
@@ -278,10 +293,12 @@ public class BluetoothController {
 	 * @return
 	 */
 	public boolean write(String str) {
-		if (bleGattCharacteristic == null)
+		if (bleGattCharacteristic == null) {
 			return false;
-		if (bleGatt == null)
+		}
+		if (bleGatt == null) {
 			return false;
+		}
 		bleGattCharacteristic.setValue(str);
 		return bleGatt.writeCharacteristic(bleGattCharacteristic);
 	}

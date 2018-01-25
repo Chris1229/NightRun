@@ -22,6 +22,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
@@ -167,14 +168,17 @@ public class MemberLocationActivity extends BaseActivity {
 
             mBaiduMap.setMyLocationData(locData);
 
-            if (isFirstLoc) {
+          if (isFirstLoc) {
                 LatLng pointLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
                 MapStatus mMapStatus = new MapStatus.Builder()
                         .target(pointLocation)
                         .zoom(12)
                         .build();
-                //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+              MyLocationConfiguration.LocationMode locationMode = MyLocationConfiguration.LocationMode.NORMAL;
+              BitmapDescriptor mCurrentMarker =BitmapDescriptorFactory.fromResource(R.mipmap.viewlib_ic_weight_fat);
+              mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(locationMode,true,mCurrentMarker));
+              //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
                 MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
                 mBaiduMap.animateMapStatus(mMapStatusUpdate);
             }
@@ -228,7 +232,6 @@ public class MemberLocationActivity extends BaseActivity {
             }
         }).tag(this.toString()).build().excute();
 
-
     }
 
     private void initMarker(List<GroupUser> list){
@@ -236,16 +239,18 @@ public class MemberLocationActivity extends BaseActivity {
         //定义Maker坐标点
 //        LatLng point = new LatLng(lat, lng);
 //        LatLng point = new LatLng(116.421028, 39.928832);
-        LatLng point = new LatLng(39.928832,116.421028);
-        //构建Marker图标
-        BitmapDescriptor bitmap = BitmapDescriptorFactory
-                .fromResource(R.mipmap.map_icon_pin);
-        //构建MarkerOption，用于在地图上添加Marker
-        OverlayOptions option = new MarkerOptions()
-                .position(point)
-                .icon(bitmap);
-        //在地图上添加Marker，并显示
-        mBaiduMap.addOverlay(option);
+        for(int i=0;i<list.size();i++){
+            LatLng point = new LatLng(list.get(i).getDevice().getLng(),list.get(i).getDevice().getLat());
+            //构建Marker图标
+            BitmapDescriptor bitmap = BitmapDescriptorFactory
+                    .fromResource(R.mipmap.viewlib_ic_weight_slim);
+            //构建MarkerOption，用于在地图上添加Marker
+            OverlayOptions option = new MarkerOptions()
+                    .position(point)
+                    .icon(bitmap);
+            //在地图上添加Marker，并显示
+            mBaiduMap.addOverlay(option);
 
+        }
     }
 }

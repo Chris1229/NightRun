@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -43,10 +42,6 @@ import com.zt.nightrun.model.req.ReqActiveDevice;
 import com.zt.nightrun.model.req.ReqShareCode;
 import com.zt.nightrun.model.resp.RespActiveDevice;
 import com.zt.nightrun.model.resp.RespShareCode;
-import com.zt.nightrun.view.CustomEditDialog;
-import com.zt.nightrun.zxing.activity.CaptureActivity;
-
-import static android.R.id.list;
 
 /**
  * 作者：by chris
@@ -66,8 +61,8 @@ public class DeviceDetailsActivity extends BaseActivity implements View.OnClickL
     private Intent intentService;
     private MsgReceiver receiver;
     private BluetoothController controller = BluetoothController.getInstance();
-//    private String BlueName = "FL-DCF1EB3C94AB";
-    private String BlueName = "CUSZER-E5E557BEE";
+    private String blueName = "bt-DCF1EB3C94AB";
+//    private String blueName = "bt-C12D1E2E5D27";
     private TextView tvConnect, tvConnectStatus;
     private static final int REQUEST_ENABLE = 1001;
     private boolean isConnect =false;
@@ -81,6 +76,7 @@ public class DeviceDetailsActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_device_detail_layout, true);
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
+        blueName ="bt-"+uid;
         deviceId = intent.getIntExtra("deviceId", 0);
         deviceName = intent.getStringExtra("deviceName");
         shareUtils = new ShareUtils(this);
@@ -430,7 +426,8 @@ public class DeviceDetailsActivity extends BaseActivity implements View.OnClickL
                 String name = intent.getStringExtra("name");
                 String address = intent.getStringExtra("address");
                 Log.i("info====---", "device_name:" + name);
-                if(name.equals(BlueName)){
+                if(name.equals(blueName)){
+                    ToastUtils.show(DeviceDetailsActivity.this,"查找到对应设备~");
                     device.setName(name);
                     device.setAddress(address);
                     BluetoothController.getInstance().connect(device);
