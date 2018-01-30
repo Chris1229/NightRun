@@ -1,6 +1,8 @@
 package com.zt.nightrun.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.android.volley.error.VolleyError;
@@ -25,8 +27,11 @@ import com.zt.nightrun.model.req.ReqLocationHistory;
 import com.zt.nightrun.model.resp.Location;
 import com.zt.nightrun.model.resp.RespLocationHistory;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.media.CamcorderProfile.get;
 
@@ -36,7 +41,7 @@ import static android.media.CamcorderProfile.get;
  * 邮箱：android_cjx@163.com
  */
 
-public class GuijiActivity extends BaseActivity{
+public class GuijiActivity extends BaseActivity {
 
     private MapView mMapView;
     private BaiduMap mBaiduMap;
@@ -50,19 +55,56 @@ public class GuijiActivity extends BaseActivity{
     private int deviceId;
     private int lastId;
 
+    private final Timer timer = new Timer();
+    private TimerTask task;
+    private static class MyHandler extends Handler {
+
+        private final WeakReference<GuijiActivity> mActivity;
+
+        MyHandler(GuijiActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            GuijiActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what){
+
+                    case 1:
+                        activity.reqLocationHistory();
+                        break;
+
+                }
+            }
+        }
+    }
+
+    private MyHandler mHandler = new MyHandler(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_guiji_layout,true);
+        setContentView(R.layout.activity_guiji_layout, true);
 
-        deviceId =getIntent().getIntExtra("deviceId",0);
+        deviceId = getIntent().getIntExtra("deviceId", 0);
         initView();
 
-        reqLocationHistory();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                Message message = new Message();
+                message.what = 1;
+                mHandler.sendMessage(message);
+            }
+        };
+
+        timer.schedule(task,0,5000);
     }
 
-    private void initView(){
+    private void initView() {
         setTitle("设备历史轨迹");
 
         // 地图初始化
@@ -89,38 +131,39 @@ public class GuijiActivity extends BaseActivity{
     }
 
     // 初始化
-    public void initOverlay(LatLng middleLatLng) {
+    public void initOverlay() {
+        LatLng middleLatLng = new LatLng((points.get(0).latitude + points.get(points.size() - 1).latitude) / 2, (points.get(0).longitude + points.get(points.size() - 1).longitude) / 2);
         OverlayOptions ooPolyline = new PolylineOptions().width(10).color(0xAAFF0000).points(points);
         mBaiduMap.addOverlay(ooPolyline);
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(middleLatLng);
         mBaiduMap.setMapStatus(u);
         icon = BitmapDescriptorFactory.fromResource(R.mipmap.viewlib_ic_weight_fat);
-        OverlayOptions ooA = new MarkerOptions().position(points.get(points.size()-1)).zIndex(7)
+        OverlayOptions ooA = new MarkerOptions().position(points.get(points.size() - 1)).zIndex(7)
                 .icon(icon).draggable(false);
         mMarker = (Marker) (mBaiduMap.addOverlay(ooA));
 
     }
 
 
-    private void reqLocationHistory(){
+    private void reqLocationHistory() {
 
         final ReqLocationHistory reqLocationHistory = new ReqLocationHistory();
-            reqLocationHistory.setDeviceId(deviceId);
+        reqLocationHistory.setDeviceId(deviceId);
         HttpRequestProxy.get().create(reqLocationHistory, new AbsHttpRequestProxy.RequestListener() {
             @Override
             public void onSuccess(Object response) {
 
-                Log.i("info",response.toString());
-                RespLocationHistory respLocationHistory =(RespLocationHistory) response;
-                if(respLocationHistory.getData()!=null){
-                    if(respLocationHistory.getData().getHistory().size()>0){
+                Log.i("info", response.toString());
+                RespLocationHistory respLocationHistory = (RespLocationHistory) response;
+                if (respLocationHistory.getData() != null) {
+                    if (respLocationHistory.getData().getHistory().size() > 0) {
 
-                        List<Location> locationList =respLocationHistory.getData().getHistory();
+                        List<Location> locationList = respLocationHistory.getData().getHistory();
 
                         initLocationData(locationList);
 
-                    }else{
-                        ToastUtils.show(GuijiActivity.this,"该设备暂无历史记录");
+                    } else {
+                        ToastUtils.show(GuijiActivity.this, "该设备暂无历史记录");
                     }
                 }
 
@@ -128,14 +171,14 @@ public class GuijiActivity extends BaseActivity{
 
             @Override
             public void onFailed(VolleyError error) {
-                Log.i("info",error.toString());
-                ToastUtils.show(GuijiActivity.this,error.toString());
+                Log.i("info", error.toString());
+                ToastUtils.show(GuijiActivity.this, error.toString());
             }
         }).tag(this.toString()).build().excute();
 
     }
 
-    private void initLocationData(List<Location> list){
+    private void initLocationData(List<Location> list) {
 //        LocationBean bean1 = new LocationBean();
 //        bean1.setLat(39.933306);
 //        bean1.setLng(116.395932);
@@ -212,22 +255,22 @@ public class GuijiActivity extends BaseActivity{
 //        points.add(13,new LatLng(bean14.getLat(),bean14.getLng()));
 //        points.add(14,new LatLng(bean15.getLat(),bean15.getLng()));
 
-        Log.i("location---",points.toString());
-        for(int i=0;i<list.size();i++){
-            points.add(i,new LatLng(list.get(i).getLng(),list.get(i).getLat()));
+        Log.i("location---", points.toString());
+        for (int i = 0; i < list.size(); i++) {
+            points.add(i, new LatLng(list.get(i).getLng(), list.get(i).getLat()));
         }
-        if(points.size()>0 && points.size()<3){
-            MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(new LatLng(points.get(0).longitude,points.get(0).latitude));
+        if (points.size() > 0 && points.size() < 3) {
+            MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(new LatLng(points.get(0).longitude, points.get(0).latitude));
             mBaiduMap.setMapStatus(u);
             icon = BitmapDescriptorFactory.fromResource(R.mipmap.viewlib_ic_weight_fat);
             OverlayOptions ooA = new MarkerOptions().position(points.get(0)).zIndex(7)
                     .icon(icon).draggable(false);
             mMarker = (Marker) (mBaiduMap.addOverlay(ooA));
 
-        }else{
+        } else {
 
-            MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(points.get(points.size()/2), 12.0f);
-            mBaiduMap.setMapStatus(msu);
+//            MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(points.get(points.size() / 2), 12.0f);
+//            mBaiduMap.setMapStatus(msu);
 
             LatLng llStart = new LatLng(points.get(0).latitude, points.get(0).longitude);
             OverlayOptions ooStart = new MarkerOptions().position(llStart).icon(BitmapDescriptorFactory
@@ -236,49 +279,24 @@ public class GuijiActivity extends BaseActivity{
             if (mBaiduMap != null) {
                 mBaiduMap.addOverlay(ooStart);
             }
-
-            LatLng llA = new LatLng(points.get(points.size() - 1).latitude, points.get(points.size() - 1).longitude);
-
-//        OverlayOptions ooEnd = new MarkerOptions().position(points.get(points.size()-1)).icon(BitmapDescriptorFactory
-//                .fromResource(R.mipmap.chufa_pic)).zIndex(4).draggable(false);
 //
-//        if (mBaiduMap != null) {
-//            mBaiduMap.addOverlay(ooEnd);
-//        }
+//            LatLng llEnd = new LatLng(points.get(points.size() - 1).latitude, points.get(points.size() - 1).longitude);
+//
+//            OverlayOptions ooEnd = new MarkerOptions().position(llEnd).icon(BitmapDescriptorFactory
+//                    .fromResource(R.mipmap.viewlib_ic_weight_fat)).zIndex(4).draggable(false);
+//
+//            if (mBaiduMap != null) {
+//                mBaiduMap.addOverlay(ooEnd);
+//            }
 
-
-            llMiddle = new LatLng((points.get(0).latitude + points.get(points.size() - 1).latitude) / 2, (points.get(0).longitude + points.get(points.size() - 1).longitude) / 2);
-            initOverlay(llMiddle);
+            initOverlay();
         }
     }
 
-    public class LocationBean{
-        private double lat;
-        private double lng;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-        public double getLat() {
-            return lat;
-        }
-
-        public void setLat(double lat) {
-            this.lat = lat;
-        }
-
-        public double getLng() {
-            return lng;
-        }
-
-        public void setLng(double lng) {
-            this.lng = lng;
-        }
-
-        @Override
-        public String toString() {
-            return "LocationBean{" +
-                    "lat=" + lat +
-                    ", lng=" + lng +
-                    '}';
-        }
+        timer.cancel();
     }
-
 }
